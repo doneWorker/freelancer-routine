@@ -16,16 +16,24 @@ const initialState: ProjectState = {
   list: [],
 };
 
-const testProject: Project = {
-  id: "aaa",
-  img: "img",
-  name: "first project",
-  isCompleted: false,
-  paymentType: PaymentType.Hourly,
-  dateCreated: Date(),
-  dateUpdated: Date(),
-  dateCompleted: Date(),
-  description: "",
+const createMockProjects = (total: number = 1): Project[] => {
+  const out: Project[] = [];
+
+  for (let i = 0; i < total; i++) {
+    out.push({
+      id: Math.random().toString(),
+      img: "img",
+      name: "first project",
+      isCompleted: false,
+      paymentType: PaymentType.Hourly,
+      dateCreated: Date(),
+      dateUpdated: Date(),
+      dateCompleted: Date(),
+      description: "",
+    });
+  }
+
+  return out;
 };
 
 export const projectSlice = createSlice({
@@ -58,7 +66,7 @@ export const { load, create, update, setLoadingStatus } = projectSlice.actions;
 export const fetchProjects =
   (): ThunkAction<void, RootState, unknown, AnyAction> => async (dispatch) => {
     dispatch(setLoadingStatus(LoadingStatus.Loading));
-    dispatch(load([testProject, testProject, testProject, testProject]));
+    dispatch(load(createMockProjects(5)));
 
     window?.setTimeout(
       () => dispatch(setLoadingStatus(LoadingStatus.Succeeded)),

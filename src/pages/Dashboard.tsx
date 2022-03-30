@@ -1,38 +1,44 @@
 import { useEffect, useMemo } from "react";
 import {
   Container,
-  List,
-  ListItem,
-  ListIcon,
-  OrderedList,
-  UnorderedList,
+  Box,
+  Heading,
+  Text,
+  SimpleGrid,
+  Center,
 } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
-import styled from "styled-components";
 
 import { fetchProjects, projectsSelector } from "../store/slices/projectsSlice";
 import { LoadingStatus } from "../types/common";
 import { Project } from "../models/Project";
 
 /*
- * Needs to be moved out of here
+ * TODO: Needs to be moved out of here
  */
-
-const ProjectLI = styled(ListItem)`
-  width: 100%;
-  border: 2px solid #fff;
-`;
 interface ProjectsListProps {
   list: Project[];
 }
 const ProjectsList = ({ list }: ProjectsListProps) => (
-  <List>
-    {list.map((li) => (
-      <ProjectLI border={1} key={li.id}>
-        {li.name}
-      </ProjectLI>
+  <SimpleGrid minChildWidth="200px" spacing="10px">
+    {list.map(({ name, description }) => (
+      <Box p={5} borderWidth="1px" borderRadius="lg" overflow="hidden">
+        <Heading fontSize="m">{name}</Heading>
+        <Text mt={4}>{description}</Text>
+      </Box>
     ))}
-  </List>
+    <Box
+      p={5}
+      borderWidth="2px"
+      borderStyle={"dotted"}
+      borderRadius="lg"
+      overflow="hidden"
+    >
+      <Center>
+        <Heading fontSize="m">Add New Project</Heading>
+      </Center>
+    </Box>
+  </SimpleGrid>
 );
 
 /*
@@ -49,7 +55,10 @@ const Dashboard = () => {
   }, [dispatch]);
 
   return (
-    <Container>
+    <Container maxW="container.xl">
+      <Heading p={5} fontSize={"xl"}>
+        My projects
+      </Heading>
       <ProjectsList list={projects.list} />
       {/* {status === LoadingStatus.Loading && <>Loading...</>}
       {status === LoadingStatus.Failed && <>Failed...</>}
