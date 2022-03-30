@@ -11,6 +11,10 @@ export type Project = {
   dateCreated: string;
   dateUpdated: string;
   img?: string;
+  timeSpent?: number;
+  tasksTotal?: number;
+  tasksCompleted?: number;
+  moneyEarned?: number;
   dateCompleted?: string;
   description?: string;
 };

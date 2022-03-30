@@ -1,0 +1,13 @@
+{
+  "translation": {
+    "dashboard": {
+      "MY_PROJECTS": "Мои Проекты",
+      "RECENT_TASKS": "Последние задачи",
+      "ADD_NEW": "Добавить новый проект",
+      "TASKS_TOTAL": "Количество задач",
+      "TASKS_COMPLETED": "Задач выполнено",
+      "TIME_SPENT": "Времени затрачено",
+      "MONEY_EARNED": "Денег заработано"
+    }
+  }
+}
