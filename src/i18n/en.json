@@ -1,5 +1,7 @@
 {
   "translation": {
+    "en": "English",
+    "ru": "Russian",
     "dashboard": {
       "MY_PROJECTS": "My Projects",
       "RECENT_TASKS": "Recent Tasks",
@@ -7,7 +9,8 @@
       "TASKS_TOTAL": "number of tasks",
       "TASKS_COMPLETED": "tasks completed",
       "TIME_SPENT": "time spent",
-      "MONEY_EARNED": "money earned"
+      "MONEY_EARNED": "money earned",
+      "STATS": "Statistics"
     }
   }
 }
