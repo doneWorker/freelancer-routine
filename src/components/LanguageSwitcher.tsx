@@ -18,16 +18,8 @@ interface Props {
   style: CSSProperties;
 }
 
-const shortToFullForm: Record<string, string> = {
-  ru: "Russian",
-  en: "English",
-};
-
 const LanguageSwitcher = ({ style }: Props) => {
   const { t, i18n } = useTranslation();
-  //   const currentLanguage = useMemo(() => {
-  //     return shortToFullForm[i18n.language];
-  //   }, [i18n.language]);
 
   const lang = i18n.language;
 

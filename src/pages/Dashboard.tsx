@@ -9,18 +9,8 @@ import {
   Icon,
   Text,
   Tooltip,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  Button,
   useDisclosure,
   Skeleton,
-  SkeletonCircle,
-  SkeletonText,
   Flex,
   Stack,
 } from "@chakra-ui/react";
@@ -31,38 +21,10 @@ import { Project } from "../models/Project";
 import { fetchProjects, projectsSelector } from "../store/slices/projectsSlice";
 import { LoadingStatus } from "../types/common";
 import LanguageSwitcher from "../components/LanguageSwitcher";
+import ProjectModal from "../components/Project.modal";
 
 import { BsClock, BsListTask } from "react-icons/bs";
 import { BiTask, BiDollar } from "react-icons/bi";
-
-/*
- * TODO: Needs to be moved out of here
- */
-interface ProjectModalProps {
-  type: "new" | "edit";
-  isOpen: boolean;
-  onClose: () => void;
-  data?: Partial<Project>;
-}
-const ProjectModal = ({ isOpen, onClose, type, data }: ProjectModalProps) => {
-  return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>Modal Title</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody></ModalBody>
-
-        <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={onClose}>
-            Close
-          </Button>
-          <Button variant="ghost">Secondary Action</Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
-  );
-};
 
 /*
  * TODO: Needs to be moved out of here

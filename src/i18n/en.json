@@ -2,6 +2,18 @@
   "translation": {
     "en": "English",
     "ru": "Russian",
+    "common": {
+      "NAME": "name",
+      "DESCRIPTION": "description"
+    },
+    "forms": {
+      "project": {
+        "EARNING_TYPE": "payments agreement",
+        "EARN_HOURLY": "hourly",
+        "EARN_ENTIRE_PROJECT": "entire project",
+        "EARN_NOTHING": "no payments ;("
+      }
+    },
     "dashboard": {
       "MY_PROJECTS": "My Projects",
       "RECENT_TASKS": "Recent Tasks",

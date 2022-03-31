@@ -17,4 +17,5 @@ export type Project = {
   moneyEarned?: number;
   dateCompleted?: string;
   description?: string;
+  hourlyRate?: number;
 };
