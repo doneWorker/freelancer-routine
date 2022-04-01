@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import {
   Container,
   Box,
@@ -10,8 +10,6 @@ import {
   Text,
   Tooltip,
   useDisclosure,
-  Skeleton,
-  Flex,
   Stack,
   Progress,
 } from "@chakra-ui/react";
@@ -20,12 +18,13 @@ import { useTranslation } from "react-i18next";
 
 import { Project } from "../models/Project";
 import { fetchProjects, projectsSelector } from "../store/slices/projectsSlice";
-import { LoadingStatus } from "../types/common";
+// import { LoadingStatus } from "../types/common";
 import LanguageSwitcher from "../components/LanguageSwitcher";
 import ProjectModal from "../components/Project.modal";
 
 import { BsClock, BsListTask } from "react-icons/bs";
 import { BiTask, BiDollar } from "react-icons/bi";
+import { useTicker } from "../hooks/useTicker";
 
 /*
  * TODO: Needs to be moved out of here
@@ -156,7 +155,9 @@ const Dashboard = () => {
   const projects = useSelector(projectsSelector);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const status = useMemo(() => projects.status, [projects.status]);
+  // const status = useMemo(() => projects.status, [projects.status]);
+
+  useTicker(useCallback(() => {}, []));
 
   // hydrate
   useEffect(() => {
