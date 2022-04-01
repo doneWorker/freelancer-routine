@@ -1,16 +1,16 @@
 // import { lazy } from "react";
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
-import { Routes, Route } from "react-router-dom";
-import Dashboard from "./pages/Dashboard";
-import Project from "./pages/Project";
+import { ChakraProvider, extendTheme } from '@chakra-ui/react'
+import { Routes, Route } from 'react-router-dom'
+import Dashboard from './pages/Dashboard'
+import Project from './pages/Project'
 
 // const Project = lazy(() => import("./pages/Project"));
 // const Dashboard = lazy(() => import("./pages/Dashboard"));
 
 const theme = extendTheme({
-  initialColorMode: "light",
+  initialColorMode: 'light',
   useSystemColorMode: false,
-});
+})
 
 const App = () => (
   <ChakraProvider theme={theme}>
@@ -20,6 +20,6 @@ const App = () => (
       <Route path="project" element={<Project />} />
     </Routes>
   </ChakraProvider>
-);
+)
 
-export default App;
+export default App

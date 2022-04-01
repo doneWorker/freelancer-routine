@@ -1,1 +1,1 @@
-export const formatDate = () => {};
+export const formatDate = () => {}

@@ -1,1 +1,1 @@
-export type Report = {};
+export type Report = {}

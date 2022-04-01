@@ -1,16 +1,16 @@
-import { createRoot } from "react-dom/client";
-import * as React from "react";
-import reportWebVitals from "./reportWebVitals";
-import * as serviceWorker from "./serviceWorker";
-import { BrowserRouter } from "react-router-dom";
-import { Provider } from "react-redux";
-import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
+import { createRoot } from 'react-dom/client'
+import * as React from 'react'
+import reportWebVitals from './reportWebVitals'
+import * as serviceWorker from './serviceWorker'
+import { BrowserRouter } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import i18n from 'i18next'
+import { initReactI18next } from 'react-i18next'
 
-import App from "./App";
-import { store } from "./store";
-import en from "./i18n/en.json";
-import ru from "./i18n/ru.json";
+import App from './App'
+import { store } from './store'
+import en from './i18n/en.json'
+import ru from './i18n/ru.json'
 
 /*
  * Bootstrap i18n
@@ -25,19 +25,19 @@ i18n
       en,
       ru,
     },
-    lng: "en", // if you're using a language detector, do not define the lng option
-    fallbackLng: "en",
+    lng: 'en', // if you're using a language detector, do not define the lng option
+    fallbackLng: 'en',
 
     interpolation: {
       escapeValue: false, // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
     },
-  });
+  })
 
 /*
  * Bootstrap ReactDOM
  */
-const container = document.getElementById("root") as Element;
-const root = createRoot(container);
+const container = document.getElementById('root') as Element
+const root = createRoot(container)
 
 root.render(
   // <React.StrictMode>
@@ -47,14 +47,14 @@ root.render(
     </BrowserRouter>
   </Provider>
   // </React.StrictMode>
-);
+)
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://cra.link/PWA
-serviceWorker.unregister();
+serviceWorker.unregister()
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals(console.log);
+reportWebVitals(console.log)

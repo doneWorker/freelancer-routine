@@ -1,5 +1,5 @@
 const Project = () => {
-  return <>Project</>;
-};
+  return <>Project</>
+}
 
-export default Project;
+export default Project
