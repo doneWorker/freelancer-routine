@@ -26,6 +26,8 @@ const createMockProjects = (total: number = 1): Project[] => {
       img: "img",
       name: "first project",
       isCompleted: false,
+      tasksCompleted: Math.floor(Math.random() * 25) + 1,
+      tasksTotal: 25,
       paymentType: PaymentType.Hourly,
       dateCreated: Date(),
       dateUpdated: Date(),

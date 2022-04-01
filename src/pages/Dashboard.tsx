@@ -13,6 +13,7 @@ import {
   Skeleton,
   Flex,
   Stack,
+  Progress,
 } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -42,6 +43,7 @@ const ProjectsList = ({ list }: ProjectsListProps) => {
       <SimpleGrid minChildWidth="250px" spacing="10px">
         {list.map(
           ({
+            id,
             name,
             timeSpent = 90,
             tasksCompleted = 10,
@@ -49,6 +51,7 @@ const ProjectsList = ({ list }: ProjectsListProps) => {
             moneyEarned = 555,
           }) => (
             <Box
+              key={id}
               height={150}
               borderWidth="1px"
               borderRadius="lg"
@@ -57,6 +60,11 @@ const ProjectsList = ({ list }: ProjectsListProps) => {
               flexDirection="column"
               justifyContent="space-between"
             >
+              <Progress
+                hasStripe
+                value={(tasksCompleted * 100) / tasksTotal}
+                h={1}
+              />
               <Box p={6}>
                 <Heading fontSize="m">{name}</Heading>
               </Box>
