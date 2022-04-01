@@ -12,7 +12,12 @@
         "EARN_HOURLY": "почасовая оплата",
         "EARN_ENTIRE_PROJECT": "оплата за проект",
         "EARN_NOTHING": "нет оплаты"
-      }
+      },
+      "SUBMIT": "Отправить",
+      "UPDATE": "Обновить",
+      "CREATE": "Создать",
+      "CANCEL": "Отмена",
+      "CLOSE": "Закрыть"
     },
     "dashboard": {
       "MY_PROJECTS": "Мои Проекты",

@@ -12,7 +12,12 @@
         "EARN_HOURLY": "hourly",
         "EARN_ENTIRE_PROJECT": "entire project",
         "EARN_NOTHING": "no payments ;("
-      }
+      },
+      "SUBMIT": "Submit",
+      "UPDATE": "Update",
+      "CREATE": "Create",
+      "CANCEL": "Cancel",
+      "CLOSE": "Close"
     },
     "dashboard": {
       "MY_PROJECTS": "My Projects",

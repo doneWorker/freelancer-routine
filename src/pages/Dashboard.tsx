@@ -178,11 +178,11 @@ const Dashboard = () => {
           </Heading>
           <Divider mb={10} />
           <Stack>
+            {/* <Skeleton height="40px" />
             <Skeleton height="40px" />
             <Skeleton height="40px" />
             <Skeleton height="40px" />
-            <Skeleton height="40px" />
-            <Skeleton height="40px" />
+            <Skeleton height="40px" /> */}
           </Stack>
         </section>
 
@@ -192,12 +192,12 @@ const Dashboard = () => {
           </Heading>
           <Divider mb={10} />
           <Box>
-            <Skeleton mt="4" height="300px" />
+            {/* <Skeleton mt="4" height="300px" />
             <Flex justify="space-between">
               <Skeleton mt="4" width="33%" height="150px" />
               <Skeleton mt="4" width="33%" height="150px" />
               <Skeleton mt="4" width="33%" height="150px" />
-            </Flex>
+            </Flex> */}
           </Box>
         </section>
       </Container>

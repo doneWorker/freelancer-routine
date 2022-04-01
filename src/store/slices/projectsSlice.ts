@@ -3,6 +3,7 @@ import { ThunkAction } from "./../../../node_modules/redux-thunk/src/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { LoadingStatus } from "../../types/common";
 import { RootState } from "../index";
+import { v4 as uuid } from "uuid";
 
 import { PaymentType, Project } from "../../models/Project";
 
@@ -68,10 +69,19 @@ export const fetchProjects =
     dispatch(setLoadingStatus(LoadingStatus.Loading));
     dispatch(load(createMockProjects(5)));
 
-    window?.setTimeout(
+    window.setTimeout(
       () => dispatch(setLoadingStatus(LoadingStatus.Succeeded)),
       2_000
     );
+  };
+
+export const createProject =
+  (
+    project: Omit<Project, "id">
+  ): ThunkAction<void, RootState, unknown, AnyAction> =>
+  async (dispatch) => {
+    const createdProject: Project = { ...project, id: uuid() };
+    dispatch(create(createdProject));
   };
 
 /*
