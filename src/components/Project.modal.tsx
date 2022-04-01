@@ -1,5 +1,5 @@
-import { useRef, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useRef, useCallback } from 'react'
+import { useDispatch } from 'react-redux'
 import {
   Modal,
   ModalOverlay,
@@ -15,56 +15,61 @@ import {
   FormControl,
   FormLabel,
   Select,
-} from "@chakra-ui/react";
-import { useTranslation } from "react-i18next";
+} from '@chakra-ui/react'
+import { useTranslation } from 'react-i18next'
 
-import { Project } from "../models/Project";
-import { create } from "../store/slices/projectsSlice";
+import { Project } from '../models/Project'
+import { createProject } from '../store/slices/projectsSlice'
 
-interface ProjectModalProps {
-  type: "new" | "edit";
-  isOpen: boolean;
-  onClose: () => void;
-  data?: Partial<Project>;
+type ModalType = 'new' | 'edit'
+
+interface Props {
+  type: ModalType
+  isOpen: boolean
+  onClose: () => void
+  data?: Partial<Project>
 }
 
-const ProjectModal = ({ isOpen, type, data, onClose }: ProjectModalProps) => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const formRef = useRef<HTMLFormElement>(null);
+type ProjectForm = HTMLFormElement & {
+  [K in keyof Project]: HTMLInputElement | HTMLTextAreaElement
+}
+
+const ProjectModal: React.FC<Props> = ({ isOpen, type, data, onClose }: Props) => {
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
+  const formRef = useRef<ProjectForm>(null)
 
   const handleCreate = () => {
-    // dispatch(create({ name: "New project" }));
-  };
+    const name = formRef.current?.name?.value
+    const description = formRef.current?.description?.value
 
-  // form
-  useEffect(() => {
-    setTimeout(() => console.dir(formRef.current), 2_000);
-  }, []);
+    dispatch(createProject({ name, description }))
+    onClose()
+  }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>{t("dashboard.ADD_NEW")}</ModalHeader>
+        <ModalHeader>{t('dashboard.ADD_NEW')}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <form ref={formRef}>
             <Stack spacing={3}>
               <FormControl>
-                <FormLabel>{t("common.NAME")}</FormLabel>
+                <FormLabel>{t('common.NAME')}</FormLabel>
                 <Input name="name" />
               </FormControl>
               <FormControl>
-                <FormLabel>{t("common.DESCRIPTION")}</FormLabel>
+                <FormLabel>{t('common.DESCRIPTION')}</FormLabel>
                 <Textarea name="description" />
               </FormControl>
               <FormControl>
-                <FormLabel>{t("forms.project.EARNING_TYPE")}</FormLabel>
+                <FormLabel>{t('forms.project.EARNING_TYPE')}</FormLabel>
                 <Select name="payment_type">
-                  <option>{t("forms.project.EARN_HOURLY")}</option>
-                  <option>{t("forms.project.EARN_ENTIRE_PROJECT")}</option>
-                  <option>{t("forms.project.EARN_NOTHING")}</option>
+                  <option>{t('forms.project.EARN_HOURLY')}</option>
+                  <option>{t('forms.project.EARN_ENTIRE_PROJECT')}</option>
+                  <option>{t('forms.project.EARN_NOTHING')}</option>
                 </Select>
               </FormControl>
             </Stack>
@@ -73,15 +78,15 @@ const ProjectModal = ({ isOpen, type, data, onClose }: ProjectModalProps) => {
 
         <ModalFooter>
           <Button colorScheme="blue" mr={3} onClick={handleCreate}>
-            {t("forms.CREATE")}
+            {t('forms.CREATE')}
           </Button>
           <Button variant="ghost" onClick={onClose}>
-            {t("forms.CLOSE")}
+            {t('forms.CLOSE')}
           </Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
-  );
-};
+  )
+}
 
-export default ProjectModal;
+export default ProjectModal

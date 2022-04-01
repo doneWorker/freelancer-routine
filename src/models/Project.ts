@@ -1,6 +1,7 @@
 export enum PaymentType {
   Hourly,
   Project,
+  NotSpecify,
 }
 
 export type Project = {
