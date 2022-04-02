@@ -15,10 +15,10 @@ import { ReactComponent as FlagEn } from '../../node_modules/flag-icons/flags/4x
 import { GrLanguage } from 'react-icons/gr'
 
 interface Props {
-  style: CSSProperties
+  style?: CSSProperties
 }
 
-const LanguageSwitcher: React.FC<Props> = ({ style }) => {
+const LanguageSwitcher: React.FC<Props> = ({ style = {} }) => {
   const { t, i18n } = useTranslation()
 
   const lang = i18n.language

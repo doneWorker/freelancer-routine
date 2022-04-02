@@ -1,5 +1,4 @@
 import { useMemo } from 'react'
-
 import { Tr, Td } from '@chakra-ui/react'
 
 import { Clickable } from '../types/common'
@@ -15,6 +14,7 @@ const TaskCard: React.FC<Props> = ({
   dateUpdated,
   tags,
   timeSpent = 0,
+  onClick = () => {},
 }) => {
   const created = useMemo(() => {
     return format(new Date(dateCreated), stdDatePattern)
@@ -35,6 +35,7 @@ const TaskCard: React.FC<Props> = ({
         background: 'gray.100',
         color: 'teal.500',
       }}
+      onClick={onClick}
     >
       <Td>{name}</Td>
       <Td>{duration}</Td>

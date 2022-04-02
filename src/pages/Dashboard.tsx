@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react'
-import { Container, Box, Heading, Center, Divider, Stack } from '@chakra-ui/react'
+import { Container, Box, Heading, Divider, Stack } from '@chakra-ui/react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
@@ -13,7 +13,7 @@ import { useTicker } from '../hooks/useTicker'
 /*
  * Main Page
  */
-const Dashboard = () => {
+const Dashboard: React.FC = () => {
   const projects = useSelector(projectsSelector)
   const dispatch = useDispatch()
   const { t } = useTranslation()
