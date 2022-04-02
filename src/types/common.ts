@@ -4,3 +4,5 @@ export enum LoadingStatus {
   Succeeded = 'Succeeded',
   Failed = 'Failed',
 }
+
+export type Clickable = { onClick?: () => void }

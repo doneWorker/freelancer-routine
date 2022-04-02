@@ -3,6 +3,7 @@ import ProjectCard from '../components/Project.card'
 import ProjectModal from './Project.modal'
 import { useTranslation } from 'react-i18next'
 import { Box, Center, Heading, SimpleGrid, useDisclosure } from '@chakra-ui/react'
+import { useNavigate } from 'react-router-dom'
 
 interface ProjectsListProps {
   list: Project[]
@@ -10,13 +11,22 @@ interface ProjectsListProps {
 
 const ProjectsList = ({ list }: ProjectsListProps) => {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const handleProjectClick = (id: string) => {
+    navigate(`project/${id}`)
+  }
 
   return (
     <>
       <SimpleGrid minChildWidth="250px" spacing="10px">
         {list.map((li) => (
-          <ProjectCard key={li.id} {...li} />
+          <ProjectCard
+            key={li.id}
+            onClick={() => handleProjectClick(li.id)}
+            {...li}
+          />
         ))}
         <Box
           p={5}

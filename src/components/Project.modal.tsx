@@ -1,4 +1,4 @@
-import { useRef, useCallback } from 'react'
+import { useRef, useCallback, useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import {
   Modal,
@@ -18,8 +18,9 @@ import {
 } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 
-import { Project } from '../models/Project'
+import { PaymentType, Project } from '../models/Project'
 import { createProject } from '../store/slices/projectsSlice'
+import { updateFor } from 'typescript'
 
 type ModalType = 'new' | 'edit'
 
@@ -34,17 +35,34 @@ type ProjectForm = HTMLFormElement & {
   [K in keyof Project]: HTMLInputElement | HTMLTextAreaElement
 }
 
+const defaultFormState: Partial<Project> = {
+  name: '',
+  paymentType: PaymentType.NotSpecify,
+  description: '',
+  hourlyRate: undefined,
+}
+
 const ProjectModal: React.FC<Props> = ({ isOpen, type, data, onClose }: Props) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const formRef = useRef<ProjectForm>(null)
+  const [form, setForm] = useState<typeof defaultFormState>(defaultFormState)
+  const showHourly: Boolean = form.paymentType === PaymentType.Hourly
+
+  const handleClose = () => {
+    setForm(defaultFormState)
+    onClose()
+  }
 
   const handleCreate = () => {
-    const name = formRef.current?.name?.value
-    const description = formRef.current?.description?.value
+    dispatch(createProject(form))
+    handleClose()
+  }
 
-    dispatch(createProject({ name, description }))
-    onClose()
+  const updateForm = (e: React.ChangeEvent<HTMLFormElement>) => {
+    let { name, value } = e.target
+
+    setForm((form) => ({ ...form, [name]: value }))
   }
 
   return (
@@ -54,23 +72,42 @@ const ProjectModal: React.FC<Props> = ({ isOpen, type, data, onClose }: Props) =
         <ModalHeader>{t('dashboard.ADD_NEW')}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <form ref={formRef}>
+          <form ref={formRef} onChange={updateForm}>
             <Stack spacing={3}>
               <FormControl>
                 <FormLabel>{t('common.NAME')}</FormLabel>
-                <Input name="name" />
+                <Input name="name" value={form.name} />
               </FormControl>
               <FormControl>
                 <FormLabel>{t('common.DESCRIPTION')}</FormLabel>
-                <Textarea name="description" />
+                <Textarea name="description" value={form.description} />
               </FormControl>
               <FormControl>
                 <FormLabel>{t('forms.project.EARNING_TYPE')}</FormLabel>
-                <Select name="payment_type">
-                  <option>{t('forms.project.EARN_HOURLY')}</option>
-                  <option>{t('forms.project.EARN_ENTIRE_PROJECT')}</option>
-                  <option>{t('forms.project.EARN_NOTHING')}</option>
+                <Select name="paymentType">
+                  <option
+                    selected={form.paymentType === PaymentType.Hourly}
+                    value={PaymentType.Hourly}
+                  >
+                    {t('forms.project.EARN_HOURLY')}
+                  </option>
+                  <option
+                    value={PaymentType.Project}
+                    selected={form.paymentType === PaymentType.Project}
+                  >
+                    {t('forms.project.EARN_ENTIRE_PROJECT')}
+                  </option>
+                  <option
+                    value={PaymentType.NotSpecify}
+                    selected={form.paymentType === PaymentType.NotSpecify}
+                  >
+                    {t('forms.project.EARN_NOTHING')}
+                  </option>
                 </Select>
+              </FormControl>
+              <FormControl style={{ display: showHourly ? 'block' : 'none' }}>
+                <FormLabel>{t('forms.project.HOURLY_RATE')}</FormLabel>
+                <Input name="hourlyRate" type="number" value={form.hourlyRate} />
               </FormControl>
             </Stack>
           </form>

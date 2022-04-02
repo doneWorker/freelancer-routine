@@ -17,7 +17,7 @@ const App = () => (
     <Routes>
       <Route path="/" element={<Dashboard />} />
       <Route path="dashboard" element={<Dashboard />} />
-      <Route path="project" element={<Project />} />
+      <Route path="project/:id" element={<Project />} />
     </Routes>
   </ChakraProvider>
 )

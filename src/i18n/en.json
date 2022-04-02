@@ -11,7 +11,8 @@
         "EARNING_TYPE": "payments agreement",
         "EARN_HOURLY": "hourly",
         "EARN_ENTIRE_PROJECT": "entire project",
-        "EARN_NOTHING": "no payments ;("
+        "EARN_NOTHING": "no payments ;(",
+        "HOURLY_RATE": "hourly rate"
       },
       "SUBMIT": "Submit",
       "UPDATE": "Update",

@@ -7,12 +7,12 @@ import { v4 as uuid } from 'uuid'
 
 import { PaymentType, Project } from '../../models/Project'
 
-export interface ProjectState {
+export interface ProjectsState {
   status: LoadingStatus
   list: Project[]
 }
 
-const initialState: ProjectState = {
+const initialState: ProjectsState = {
   status: LoadingStatus.Idle,
   list: [],
 }
@@ -58,7 +58,9 @@ export const fetchProjects =
 const DEFAULT_PROJECT_NAME: string = 'Awesome Project'
 
 export const createProject =
-  (project: Partial<Project>): ThunkAction<void, RootState, unknown, AnyAction> =>
+  (
+    derivedProject: Partial<Project>
+  ): ThunkAction<void, RootState, unknown, AnyAction> =>
   async (dispatch) => {
     const d = Date()
     const defaultProject: Project = {
@@ -70,13 +72,13 @@ export const createProject =
       paymentType: PaymentType.NotSpecify,
     }
 
-    const createdProject: Project = { ...defaultProject, ...project }
+    const createdProject: Project = { ...defaultProject, ...derivedProject }
     dispatch(create(createdProject))
   }
 
 /*
  * Selectors
  */
-export const projectsSelector = (state: RootState): ProjectState => state.projects
+export const projectsSelector = (state: RootState): ProjectsState => state.projects
 
 export default projectSlice.reducer

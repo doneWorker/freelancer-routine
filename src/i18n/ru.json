@@ -11,7 +11,8 @@
         "EARNING_TYPE": "оплата",
         "EARN_HOURLY": "почасовая оплата",
         "EARN_ENTIRE_PROJECT": "оплата за проект",
-        "EARN_NOTHING": "нет оплаты"
+        "EARN_NOTHING": "нет оплаты",
+        "HOURLY_RATE": "почасовая ставка"
       },
       "SUBMIT": "Отправить",
       "UPDATE": "Обновить",
