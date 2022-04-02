@@ -1,5 +1,10 @@
 export type TimeSpan = [string, string]
 
+export type TaskTag = {
+  name: string
+  color: string
+}
+
 export type Task = {
   id: string
   name: string
@@ -10,5 +15,7 @@ export type Task = {
   dateUpdated: string
   dateCompleted: string
   parentId?: string
+  timeSpent?: number
   timeSpans?: Array<TimeSpan>
+  tags?: Array<TaskTag>
 }

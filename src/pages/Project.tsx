@@ -4,12 +4,12 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
-  Td,
   TableCaption,
   TableContainer,
+  Box,
+  Flex,
 } from '@chakra-ui/react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
@@ -17,9 +17,9 @@ import { useParams } from 'react-router'
 
 import { fetchTasks, tasksSelector } from '../store/slices/tasksSlice'
 import LanguageSwitcher from '../components/LanguageSwitcher'
+import TaskRow from '../components/Task.row'
 
 import { useTicker } from '../hooks/useTicker'
-import TaskCard from '../components/Task.card'
 
 /*
  * Main Page
@@ -40,27 +40,29 @@ const Project = () => {
   return (
     <>
       <LanguageSwitcher style={{ position: 'absolute', top: 5, right: 5 }} />
-      <Container maxW="container.lg">
-        <TableContainer>
-          <Table>
-            <TableCaption>Imperial to metric conversion factors</TableCaption>
-            <Thead>
-              <Tr>
-                <Th>Name</Th>
-                <Th>Created at</Th>
-                <Th>Updated at</Th>
-                <Th isNumeric>multiply by</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {tasks.list.map((task) => (
+      <Container width="100%" maxWidth="100%">
+        <Flex>
+          <TableContainer>
+            <Table>
+              <TableCaption placement="top">Project: {id}</TableCaption>
+              <Thead>
                 <Tr>
-                  <TaskCard key={task.id} {...task} onClick={() => {}} />
+                  <Th>Name</Th>
+                  <Th>Time Spent</Th>
+                  <Th>Tags</Th>
+                  <Th>Date Created</Th>
+                  <Th>Date Updated</Th>
                 </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        </TableContainer>
+              </Thead>
+              <Tbody>
+                {tasks.list.map((task) => (
+                  <TaskRow key={task.id} {...task} onClick={() => {}} />
+                ))}
+              </Tbody>
+            </Table>
+          </TableContainer>
+          <Box>Sidebar</Box>
+        </Flex>
       </Container>
     </>
   )

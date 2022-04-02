@@ -3,7 +3,6 @@ import { ThunkAction } from './../../../node_modules/redux-thunk/src/types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { LoadingStatus } from '../../types/common'
 import { RootState } from '../index'
-import { v4 as uuid } from 'uuid'
 
 import { Task } from '../../models/Task'
 import { createMockTasks } from './mocks'

@@ -2,6 +2,7 @@ import { v4 as uuid } from 'uuid'
 
 import { Task } from './../../models/Task'
 import { PaymentType, Project } from '../../models/Project'
+import { getRandomInteger } from '../../helpers/random'
 
 /*
  * Mocks for projects
@@ -44,6 +45,7 @@ export const createMockTasks = (
       projectId,
       description: '',
       isCompleted: false,
+      timeSpent: getRandomInteger(1_000, 36_000),
       dateCreated: Date(),
       dateUpdated: Date(),
       dateCompleted: Date(),
