@@ -12,7 +12,6 @@ import {
   Flex,
 } from '@chakra-ui/react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
 
 import { fetchTasks, tasksSelector } from '../store/slices/tasksSlice'
@@ -27,7 +26,6 @@ import { useTicker } from '../hooks/useTicker'
 const Project = () => {
   const tasks = useSelector(tasksSelector)
   const dispatch = useDispatch()
-  const { t } = useTranslation()
   const { id } = useParams()
 
   useTicker(useCallback(() => {}, []))

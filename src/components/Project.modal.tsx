@@ -1,4 +1,4 @@
-import { useRef, useCallback, useState, useEffect } from 'react'
+import { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import {
   Modal,
@@ -20,7 +20,6 @@ import { useTranslation } from 'react-i18next'
 
 import { PaymentType, Project } from '../models/Project'
 import { createProject } from '../store/slices/projectsSlice'
-import { updateFor } from 'typescript'
 
 type ModalType = 'new' | 'edit'
 
