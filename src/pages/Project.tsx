@@ -41,7 +41,7 @@ const Project: React.FC = () => {
 
   return (
     <>
-      <Header isAbsolute />
+      <Header />
       <Container width="100%" maxWidth="100%">
         <Flex>
           <TableContainer width="100%">

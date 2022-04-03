@@ -1,4 +1,5 @@
-import { Box } from '@chakra-ui/react'
+import { Box, Button } from '@chakra-ui/react'
+import { Link } from 'react-router-dom'
 
 import LanguageSwitcher from '../components/LanguageSwitcher'
 
@@ -9,14 +10,22 @@ type Props = {
 const Header: React.FC<Props> = ({ isAbsolute = false }) => {
   const style = {
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     width: '100%',
+    padding: '0 5px',
     height: 50,
+    borderBottom: '1px solid #eee',
   }
 
   return (
     <Box as="header" position={isAbsolute ? 'absolute' : undefined} style={style}>
-      <LanguageSwitcher style={{ margin: 5 }} />
+      <nav>
+        <Link to="/">
+          <Button>Dashboard</Button>
+        </Link>
+      </nav>
+      <LanguageSwitcher />
     </Box>
   )
 }
