@@ -13,7 +13,8 @@ export type Task = {
   isCompleted: Boolean
   dateCreated: string
   dateUpdated: string
-  dateCompleted: string
+  dateCompleted?: string
+  extLink?: string
   parentId?: string
   timeSpent?: number
   timeSpans?: Array<TimeSpan>

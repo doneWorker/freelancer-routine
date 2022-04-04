@@ -1,10 +1,10 @@
 import { AnyAction } from 'redux'
 import { ThunkAction } from './../../../node_modules/redux-thunk/src/types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { LoadingStatus } from '../../types/common'
 import { RootState } from '../index'
 import { v4 as uuid } from 'uuid'
 
+import { LoadingStatus } from '../../types/common'
 import { PaymentType, Project } from '../../models/Project'
 
 export interface ProjectsState {
