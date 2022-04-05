@@ -19,4 +19,10 @@ export type Task = {
   timeSpent?: number
   timeSpans?: Array<TimeSpan>
   tags?: Array<TaskTag>
+  status?: TaskStatus
+}
+
+export type TaskStatus = {
+  id: string
+  name: string
 }

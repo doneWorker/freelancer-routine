@@ -1,5 +1,13 @@
 import { useEffect, useState, useRef } from 'react'
-import { Box, Stack, HStack, Input, Textarea, Button } from '@chakra-ui/react'
+import {
+  Box,
+  Stack,
+  HStack,
+  Input,
+  Textarea,
+  Button,
+  Select,
+} from '@chakra-ui/react'
 
 import { Task } from '../models/Task'
 
@@ -18,10 +26,9 @@ const defaultFormState: Partial<Task> = {
 }
 
 const TaskView: React.FC<Props> = ({
-  id,
   name,
-  dateCreated,
-  dateUpdated,
+  description,
+  extLink,
   timeSpent,
   onTaskChange,
 }) => {
@@ -63,15 +70,16 @@ const TaskView: React.FC<Props> = ({
         </HStack>
         <form ref={formRef} onChange={updateForm}>
           <Stack spacing={3} minHeight="100vh">
+            <Select name="status" placeholder="Status"></Select>
             <Input name="name" value={name} placeholder="Title" />
             <Input
               name="extLink"
-              value={form.extLink}
+              value={extLink}
               placeholder="Link to task(optional)"
             />
             <Textarea
               name="description"
-              value={form.description}
+              value={description}
               placeholder="Description"
             />
           </Stack>

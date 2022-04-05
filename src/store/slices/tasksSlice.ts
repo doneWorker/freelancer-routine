@@ -5,7 +5,7 @@ import { LoadingStatus } from '../../types/common'
 import { RootState } from '../index'
 import { v4 as uuid } from 'uuid'
 
-import { Task } from '../../models/Task'
+import { Task, TaskStatus } from '../../models/Task'
 // import { createMockTasks } from './mocks'
 
 export interface TasksState {
@@ -26,6 +26,11 @@ type UpdateTask = {
   id: string
 }
 
+type StatusPayloadAction = {
+  id: string
+  status: TaskStatus
+}
+
 export const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
@@ -35,6 +40,10 @@ export const tasksSlice = createSlice({
     },
     setActiveTask: (state, action: PayloadAction<string>) => {
       state.active = action.payload
+    },
+    setStatus: (state, action: PayloadAction<StatusPayloadAction>) => {
+      const t = state.list.find((t) => t.id === action.payload.id)
+      if (t && t !== undefined) t.status = action.payload.status
     },
     load: (state, action: PayloadAction<Task[]>) => {
       state.list = action.payload
