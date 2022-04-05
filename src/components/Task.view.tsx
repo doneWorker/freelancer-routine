@@ -34,7 +34,6 @@ const TaskView: React.FC<Props> = ({
 }) => {
   const ref = useRef<HTMLDivElement>(null)
   const formRef = useRef<HTMLFormElement>(null)
-  const [form, setForm] = useState<typeof defaultFormState>(defaultFormState)
 
   useEffect(() => {
     setTimeout(() => ref.current?.style && (ref.current.style.width = '50vw'), 100)
