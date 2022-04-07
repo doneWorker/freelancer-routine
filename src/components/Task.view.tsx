@@ -7,17 +7,17 @@ import {
   Textarea,
   ButtonGroup,
   Button,
-  Select,
   Text,
 } from '@chakra-ui/react'
 
 import { Task } from '../models/Task'
+import { useTicker } from '../hooks/useTicker'
+import { getDurationHMS } from '../helpers/dateHelper'
+import TagsInput from './common/Tags.input'
 
 import { HiOutlineClock } from 'react-icons/hi'
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
-import { useTicker } from '../hooks/useTicker'
-import { getDurationHMS } from '../helpers/dateHelper'
 
 type Props = Partial<Task> & {
   onTaskChange: (key: string, val: any) => void
@@ -99,7 +99,7 @@ const TaskView: React.FC<Props> = ({
         </HStack>
         <form ref={formRef} onChange={updateForm}>
           <Stack spacing={3} minHeight="100vh">
-            <Select name="status" placeholder="Status"></Select>
+            <TagsInput tags={[]} onAdd={() => {}} onRemove={() => {}} />
             <Input name="name" value={name} placeholder="Title" />
             <Input
               name="extLink"

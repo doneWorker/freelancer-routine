@@ -18,7 +18,8 @@
       "UPDATE": "Update",
       "CREATE": "Create",
       "CANCEL": "Cancel",
-      "CLOSE": "Close"
+      "CLOSE": "Close",
+      "ADD": "Add"
     },
     "dashboard": {
       "MY_PROJECTS": "My Projects",

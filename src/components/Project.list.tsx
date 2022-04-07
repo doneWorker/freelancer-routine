@@ -35,6 +35,7 @@ const ProjectsList = ({ list }: ProjectsListProps) => {
           borderStyle={'dotted'}
           borderRadius="lg"
           overflow="hidden"
+          transition="0.3s"
           _hover={{
             cursor: 'pointer',
             background: 'gray.100',

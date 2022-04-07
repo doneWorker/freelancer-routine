@@ -1,8 +1,8 @@
 import { v4 as uuid } from 'uuid'
 
-import { Task } from './../../models/Task'
+import { Task, TaskTag } from './../../models/Task'
 import { PaymentType, Project } from '../../models/Project'
-import { getRandomInteger } from '../../helpers/random'
+import { getRandomColor, getRandomInteger } from '../../helpers/random'
 
 /*
  * Mocks for projects
@@ -49,6 +49,23 @@ export const createMockTasks = (
       dateCreated: Date(),
       dateUpdated: Date(),
       dateCompleted: Date(),
+    })
+  }
+
+  return out
+}
+
+/*
+ * Mocks for tags
+ */
+export const createMockTags = (total: number = 1): TaskTag[] => {
+  const out: TaskTag[] = []
+
+  for (let i = 0; i < total; i++) {
+    out.push({
+      id: uuid(),
+      name: '',
+      color: getRandomColor(),
     })
   }
 

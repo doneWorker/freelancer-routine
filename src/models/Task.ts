@@ -1,9 +1,16 @@
-export type TimeSpan = [string, string?]
-
 export type TaskTag = {
+  id: string
   name: string
   color: string
 }
+
+export type TaskPhase = {
+  id: string
+  name: string
+  description?: string
+}
+
+export type TimeSpan = [string, string?]
 
 export type Task = {
   id: string

@@ -28,12 +28,17 @@ const ProjectCard: React.FC<Props> = (props) => {
     <Box
       key={props.id}
       height={150}
+      cursor="pointer"
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"
       display="flex"
       flexDirection="column"
       justifyContent="space-between"
+      transition="0.3s"
+      _hover={{
+        boxShadow: 'lg',
+      }}
       onClick={props.onClick}
     >
       <Progress hasStripe value={completePercentage} h={1} />

@@ -25,7 +25,6 @@ export const useTicker = () => {
 
   useEffect(() => {
     interval.current = setInterval(() => {
-      console.log('clbs', callbacks)
       callbacks.current.forEach((clb) => clb())
     }, DELAY)
 
