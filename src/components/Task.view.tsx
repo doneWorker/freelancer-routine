@@ -8,6 +8,7 @@ import {
   ButtonGroup,
   Button,
   Text,
+  IconButton,
 } from '@chakra-ui/react'
 
 import { Task } from 'models/Task'
@@ -18,9 +19,11 @@ import TagsInput from 'components/common/Tags.input'
 import { HiOutlineClock } from 'react-icons/hi'
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
+import { GrClose } from 'react-icons/gr'
 
 type Props = Partial<Task> & {
   onTaskChange: (key: string, val: any) => void
+  onClose: () => void
 }
 
 const TaskView: React.FC<Props> = ({
@@ -29,6 +32,7 @@ const TaskView: React.FC<Props> = ({
   extLink,
   timeSpent,
   onTaskChange,
+  onClose,
 }) => {
   const ref = useRef<HTMLDivElement>(null)
   const formRef = useRef<HTMLFormElement>(null)
@@ -70,14 +74,20 @@ const TaskView: React.FC<Props> = ({
     <Box
       ref={ref}
       flexShrink={0}
-      transition=".3s"
+      transition="400ms"
       width={0}
       borderLeft="1px solid"
       borderColor="gray.100"
       overflow="hidden"
     >
       <Box width={'50vw'} padding="0 1em">
-        <HStack marginBottom={2} padding={'5px 0'}>
+        <HStack spacing={1} marginBottom={2} padding={'5px 0'}>
+          <IconButton
+            aria-label="Close Task"
+            size="sm"
+            icon={<GrClose />}
+            onClick={onClose}
+          />
           <Button size="sm" leftIcon={<IoMdCheckmarkCircleOutline />}>
             Complete
           </Button>

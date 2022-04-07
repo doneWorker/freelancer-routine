@@ -84,6 +84,7 @@ const Project: React.FC = () => {
       >
         Add Task
       </Button>
+      Section: TODO
       <Container width="100%" maxWidth="100%">
         <Flex>
           <TableContainer width="100%">
@@ -110,7 +111,11 @@ const Project: React.FC = () => {
             </Table>
           </TableContainer>
           {isTaskView && (
-            <TaskView onTaskChange={handleChangeTask} {...activeTask} />
+            <TaskView
+              onTaskChange={handleChangeTask}
+              onClose={() => setIsTaskView(false)}
+              {...activeTask}
+            />
           )}
         </Flex>
       </Container>
