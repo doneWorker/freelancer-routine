@@ -1,6 +1,6 @@
 import { AnyAction } from 'redux'
 import { ThunkAction } from './../../../node_modules/redux-thunk/src/types'
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../index'
 import { v4 as uuid } from 'uuid'
 
@@ -80,5 +80,10 @@ export const createProject =
  * Selectors
  */
 export const projectsSelector = (state: RootState): ProjectsState => state.projects
+
+export const projectByIdSelector = (
+  state: RootState,
+  id: string | undefined
+): Project | undefined => state.projects.list.find((p) => p.id === id)
 
 export default projectSlice.reducer

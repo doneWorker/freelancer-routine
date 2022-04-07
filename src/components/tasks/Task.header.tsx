@@ -1,5 +1,13 @@
 import { memo } from 'react'
-import { Box, HStack, ButtonGroup, Button, Text, IconButton } from '@chakra-ui/react'
+import {
+  Box,
+  HStack,
+  ButtonGroup,
+  Button,
+  Text,
+  IconButton,
+  Divider,
+} from '@chakra-ui/react'
 
 import { HiOutlineClock } from 'react-icons/hi'
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io'
@@ -25,7 +33,7 @@ const TaskHeader: React.FC<TaskHeaderProps> = memo(
     handleStartTimer,
   }) => {
     return (
-      <HStack spacing={1} marginBottom={2} padding={'5px 0'}>
+      <HStack spacing={2} marginBottom={2} p={'5px 0'} h={42}>
         <IconButton
           aria-label="Close Task"
           size="sm"
@@ -47,6 +55,7 @@ const TaskHeader: React.FC<TaskHeaderProps> = memo(
           icon={<BiTrash />}
           onClick={onDelete}
         />
+        <Divider orientation="vertical" />
         <Button size="sm" leftIcon={<AiOutlinePlusCircle />}>
           Add tags
         </Button>

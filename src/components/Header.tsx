@@ -8,9 +8,10 @@ import { MdDashboard } from 'react-icons/md'
 
 type Props = {
   isAbsolute?: boolean
+  center?: JSX.Element
 }
 
-const Header: React.FC<Props> = memo(({ isAbsolute = false }) => {
+const Header: React.FC<Props> = memo(({ isAbsolute = false, center = null }) => {
   const style = {
     display: 'flex',
     justifyContent: 'space-between',
@@ -30,6 +31,7 @@ const Header: React.FC<Props> = memo(({ isAbsolute = false }) => {
           </Button>
         </Link>
       </nav>
+      {center}
       <LanguageSwitcher />
     </Box>
   )

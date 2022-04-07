@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, useMemo } from 'react'
 import {
   Container,
   Table,
@@ -14,6 +14,8 @@ import {
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useNavigate } from 'react-router'
 
+import { RootState } from 'store'
+import { projectByIdSelector } from 'store/slices/projectsSlice'
 import {
   createTask,
   fetchTasks,
@@ -40,6 +42,9 @@ const Project: React.FC = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { projectId } = useParams()
+  const projectName = useSelector((s: RootState) =>
+    projectByIdSelector(s, projectId)
+  )?.name
   const [isTaskView, setIsTaskView] = useState<Boolean>(false)
 
   const handleCloseTask = useCallback(() => {
@@ -84,7 +89,7 @@ const Project: React.FC = () => {
 
   return (
     <>
-      <Header />
+      <Header center={<b>{projectName}</b>} />
       <Button
         margin={1}
         size="sm"
