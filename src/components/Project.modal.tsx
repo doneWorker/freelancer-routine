@@ -18,8 +18,8 @@ import {
 } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 
-import { PaymentType, Project } from '../models/Project'
-import { createProject } from '../store/slices/projectsSlice'
+import { PaymentType, Project } from 'models/Project'
+import { createProject } from 'store/slices/projectsSlice'
 
 type ModalType = 'new' | 'edit'
 

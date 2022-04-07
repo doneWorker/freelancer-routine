@@ -10,10 +10,10 @@ import {
   Text,
 } from '@chakra-ui/react'
 
-import { Task } from '../models/Task'
-import { useTicker } from '../hooks/useTicker'
-import { getDurationHMS } from '../helpers/dateHelper'
-import TagsInput from './common/Tags.input'
+import { Task } from 'models/Task'
+import { useTicker } from 'hooks/useTicker'
+import { getDurationHMS } from 'helpers/dateHelper'
+import TagsInput from 'components/common/Tags.input'
 
 import { HiOutlineClock } from 'react-icons/hi'
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io'

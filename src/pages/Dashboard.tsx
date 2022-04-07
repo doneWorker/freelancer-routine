@@ -1,12 +1,12 @@
-import { useCallback, useEffect } from 'react'
+import { useEffect } from 'react'
 import { Container, Box, Heading, Divider, Stack } from '@chakra-ui/react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
-import { fetchProjects, projectsSelector } from '../store/slices/projectsSlice'
+import { fetchProjects, projectsSelector } from 'store/slices/projectsSlice'
 // import { LoadingStatus } from "../types/common";
-import LanguageSwitcher from '../components/LanguageSwitcher'
-import ProjectList from '../components/Project.list'
+import LanguageSwitcher from 'components/LanguageSwitcher'
+import ProjectList from 'components/Project.list'
 
 /*
  * Main Page

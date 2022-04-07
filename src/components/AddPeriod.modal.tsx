@@ -7,12 +7,6 @@ import {
   ModalBody,
   ModalCloseButton,
   Button,
-  Stack,
-  Input,
-  Textarea,
-  FormControl,
-  FormLabel,
-  Select,
 } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 

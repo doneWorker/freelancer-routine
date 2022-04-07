@@ -1,4 +1,3 @@
-import { timeStamp } from 'console'
 import { intervalToDuration } from 'date-fns'
 
 // Time constants

@@ -9,7 +9,7 @@ import {
   TagCloseButton,
 } from '@chakra-ui/react'
 
-import { TaskTag } from '../../models/Task'
+import { TaskTag } from 'models/Task'
 
 interface Props {
   tags: TaskTag[]

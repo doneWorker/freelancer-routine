@@ -1,7 +1,7 @@
 import { Box, Button } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 
-import LanguageSwitcher from '../components/LanguageSwitcher'
+import LanguageSwitcher from 'components/LanguageSwitcher'
 
 import { MdDashboard } from 'react-icons/md'
 

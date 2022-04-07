@@ -1,5 +1,5 @@
-import { Clickable } from '../types/common'
-import { Task } from '../models/Task'
+import { Clickable } from 'types/common'
+import { Task } from 'models/Task'
 
 type Props = Task & Clickable
 

@@ -1,9 +1,10 @@
-import { Project } from '../models/Project'
-import ProjectCard from '../components/Project.card'
-import ProjectModal from './Project.modal'
-import { useTranslation } from 'react-i18next'
 import { Box, Center, Heading, SimpleGrid, useDisclosure } from '@chakra-ui/react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
+
+import { Project } from 'models/Project'
+import ProjectCard from 'components/Project.card'
+import ProjectModal from 'components/Project.modal'
 
 interface ProjectsListProps {
   list: Project[]

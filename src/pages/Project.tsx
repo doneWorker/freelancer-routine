@@ -14,6 +14,8 @@ import {
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useNavigate } from 'react-router'
 
+import { Task } from 'models/Task'
+import { RootState } from 'store'
 import {
   createTask,
   fetchTasks,
@@ -21,12 +23,10 @@ import {
   tasksActiveSelector,
   setActiveTask,
   update,
-} from '../store/slices/tasksSlice'
-import Header from '../components/Header'
-import TaskRow from '../components/Task.row'
-import TaskView from '../components/Task.view'
-import { Task } from '../models/Task'
-import { RootState } from '../store'
+} from 'store/slices/tasksSlice'
+import Header from 'components/Header'
+import TaskRow from 'components/Task.row'
+import TaskView from 'components/Task.view'
 
 import { AiOutlinePlusCircle } from 'react-icons/ai'
 

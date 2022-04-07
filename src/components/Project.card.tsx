@@ -9,8 +9,8 @@ import {
 } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 
-import { Clickable } from '../types/common'
-import { Project } from '../models/Project'
+import { Clickable } from 'types/common'
+import { Project } from 'models/Project'
 
 import { BsClock, BsListTask } from 'react-icons/bs'
 import { BiTask, BiDollar } from 'react-icons/bi'
