@@ -110,7 +110,12 @@ const Project: React.FC = () => {
               </Thead>
               <Tbody>
                 {tasks.list.map((task) => (
-                  <TaskRow key={task.id} {...task} onClick={handleOpenTask} />
+                  <TaskRow
+                    key={task.id}
+                    {...task}
+                    isSelected={isTaskView && task.id === activeId}
+                    onClick={handleOpenTask}
+                  />
                 ))}
               </Tbody>
             </Table>

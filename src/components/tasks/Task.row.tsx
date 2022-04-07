@@ -6,7 +6,7 @@ import { Task } from 'models/Task'
 import { format } from 'date-fns'
 import { getDuration, stdDatePattern } from 'helpers/dateHelper'
 
-type Props = Task & Clickable
+type Props = Task & Clickable & { isSelected?: boolean }
 
 const TaskCard: React.FC<Props> = memo(
   ({
@@ -16,6 +16,7 @@ const TaskCard: React.FC<Props> = memo(
     dateUpdated,
     tags,
     timeSpent = 0,
+    isSelected,
     onClick = () => {},
   }) => {
     const created = useMemo(() => {
@@ -30,15 +31,19 @@ const TaskCard: React.FC<Props> = memo(
       return getDuration(timeSpent)
     }, [timeSpent])
 
+    const hoverStyles = {
+      cursor: 'pointer',
+      background: 'gray.100',
+      color: 'teal.500',
+    }
+    let extraStyles = isSelected && {
+      ...hoverStyles,
+      borderLeftWidth: 5,
+      borderColor: 'green.300',
+    }
+
     return (
-      <Tr
-        _hover={{
-          cursor: 'pointer',
-          background: 'gray.100',
-          color: 'teal.500',
-        }}
-        onClick={() => onClick(id)}
-      >
+      <Tr _hover={hoverStyles} {...extraStyles} onClick={() => onClick(id)}>
         <Td>{name}</Td>
         <Td>{duration}</Td>
         <Td>{tags}</Td>
