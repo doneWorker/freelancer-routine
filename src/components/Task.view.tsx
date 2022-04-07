@@ -1,12 +1,14 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useRef, useCallback, useState, useMemo } from 'react'
 import {
   Box,
   Stack,
   HStack,
   Input,
   Textarea,
+  ButtonGroup,
   Button,
   Select,
+  Text,
 } from '@chakra-ui/react'
 
 import { Task } from '../models/Task'
@@ -14,15 +16,11 @@ import { Task } from '../models/Task'
 import { HiOutlineClock } from 'react-icons/hi'
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
+import { useTicker } from '../hooks/useTicker'
+import { getDurationHMS } from '../helpers/dateHelper'
 
 type Props = Partial<Task> & {
   onTaskChange: (key: string, val: any) => void
-}
-
-const defaultFormState: Partial<Task> = {
-  name: '',
-  extLink: '',
-  description: '',
 }
 
 const TaskView: React.FC<Props> = ({
@@ -34,16 +32,37 @@ const TaskView: React.FC<Props> = ({
 }) => {
   const ref = useRef<HTMLDivElement>(null)
   const formRef = useRef<HTMLFormElement>(null)
+  const [time, setTime] = useState<number>(0)
+  const [isTicking, setIsTicking] = useState<Boolean>(false)
+  const { addTickerListener, removeTickerListener } = useTicker()
 
-  useEffect(() => {
-    setTimeout(() => ref.current?.style && (ref.current.style.width = '50vw'), 100)
-  }, [])
+  const tickerCallback = useCallback(() => {
+    setTime((p) => ++p)
+  }, [setTime])
 
   const updateForm = (e: React.ChangeEvent<HTMLFormElement>) => {
     let { name, value } = e.target
 
     onTaskChange(name, value)
   }
+
+  const handleStartTimer = useCallback(() => {
+    setIsTicking(true)
+    addTickerListener(tickerCallback)
+  }, [addTickerListener, tickerCallback, setIsTicking])
+
+  const handleStopTimer = useCallback(() => {
+    setIsTicking(false)
+    removeTickerListener(tickerCallback)
+  }, [removeTickerListener, tickerCallback, setIsTicking])
+
+  const formattedTimeSpent = useMemo(() => {
+    return getDurationHMS(time)
+  }, [time])
+
+  useEffect(() => {
+    setTimeout(() => ref.current?.style && (ref.current.style.width = '50vw'), 100)
+  }, [])
 
   return (
     <Box
@@ -57,15 +76,26 @@ const TaskView: React.FC<Props> = ({
     >
       <Box width={'50vw'} padding="0 1em">
         <HStack marginBottom={2} padding={'5px 0'}>
-          <Button size="sm" leftIcon={<AiOutlinePlusCircle />}>
-            Add tags
-          </Button>
-          <Button size="sm" leftIcon={<HiOutlineClock />}>
-            Start
-          </Button>
           <Button size="sm" leftIcon={<IoMdCheckmarkCircleOutline />}>
             Complete
           </Button>
+          <Button size="sm" leftIcon={<AiOutlinePlusCircle />}>
+            Add tags
+          </Button>
+          <ButtonGroup size="sm" isAttached spacing={0}>
+            <Button
+              size="sm"
+              mr="-px"
+              leftIcon={<HiOutlineClock />}
+              onClick={isTicking ? handleStopTimer : handleStartTimer}
+            >
+              {isTicking ? 'Pause' : 'Start'}
+            </Button>
+            <Button size="sm">Add time period</Button>
+          </ButtonGroup>
+          <Box ml="auto !important">
+            <Text>Working time: {formattedTimeSpent}</Text>
+          </Box>
         </HStack>
         <form ref={formRef} onChange={updateForm}>
           <Stack spacing={3} minHeight="100vh">

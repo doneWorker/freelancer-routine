@@ -1,4 +1,4 @@
-export type TimeSpan = [string, string]
+export type TimeSpan = [string, string?]
 
 export type TaskTag = {
   name: string

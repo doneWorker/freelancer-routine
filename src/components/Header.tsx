@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 
 import LanguageSwitcher from '../components/LanguageSwitcher'
 
+import { MdDashboard } from 'react-icons/md'
+
 type Props = {
   isAbsolute?: boolean
 }
@@ -22,7 +24,9 @@ const Header: React.FC<Props> = ({ isAbsolute = false }) => {
     <Box as="header" position={isAbsolute ? 'absolute' : undefined} style={style}>
       <nav>
         <Link to="/">
-          <Button>Dashboard</Button>
+          <Button display="flex" alignItems="center" leftIcon={<MdDashboard />}>
+            Dashboard
+          </Button>
         </Link>
       </nav>
       <LanguageSwitcher />

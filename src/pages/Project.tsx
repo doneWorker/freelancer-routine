@@ -14,7 +14,6 @@ import {
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useNavigate } from 'react-router'
 
-import { useTicker } from '../hooks/useTicker'
 import {
   createTask,
   fetchTasks,
@@ -29,8 +28,10 @@ import TaskView from '../components/Task.view'
 import { Task } from '../models/Task'
 import { RootState } from '../store'
 
+import { AiOutlinePlusCircle } from 'react-icons/ai'
+
 /*
- * Main Page
+ * Project's page
  */
 const Project: React.FC = () => {
   const tasks = useSelector(tasksSelector)
@@ -43,10 +44,9 @@ const Project: React.FC = () => {
   const { projectId } = useParams()
   const [isTaskView, setIsTaskView] = useState<Boolean>(false)
 
-  useTicker(useCallback(() => {}, []))
-
   const handleOpenTask = (taskId: string) => {
     setIsTaskView((p) => !p)
+    navigate(`/project/${projectId}/${taskId}`)
   }
 
   const handleAddTask = useCallback(async () => {
@@ -73,7 +73,12 @@ const Project: React.FC = () => {
   return (
     <>
       <Header />
-      <Button margin={1} size="sm" onClick={handleAddTask}>
+      <Button
+        margin={1}
+        size="sm"
+        leftIcon={<AiOutlinePlusCircle />}
+        onClick={handleAddTask}
+      >
         Add Task
       </Button>
       <Container width="100%" maxWidth="100%">

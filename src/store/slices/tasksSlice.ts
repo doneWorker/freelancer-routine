@@ -1,3 +1,4 @@
+import { TimeSpan } from './../../models/Task'
 import { AnyAction } from 'redux'
 import { ThunkAction } from './../../../node_modules/redux-thunk/src/types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
@@ -31,6 +32,12 @@ type StatusPayloadAction = {
   status: TaskStatus
 }
 
+type CreateTimeSpan = {
+  taskId: string
+  timeStart: string
+  timeEnd?: string
+}
+
 export const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
@@ -56,6 +63,15 @@ export const tasksSlice = createSlice({
       const { key, val } = action.payload
       if (t && t !== undefined) (t as any)[key] = val
     },
+    createTimeSpan: (state, action: PayloadAction<CreateTimeSpan>) => {
+      const t = state.list.find((t) => t.id === action.payload.taskId)
+      if (t && t.timeSpans !== undefined && Array.isArray(t.timeSpans)) {
+        const ts: TimeSpan = [action.payload.timeStart]
+        action.payload.timeEnd && (ts[1] = action.payload.timeEnd)
+        t.timeSpans.push(ts)
+      }
+    },
+    completeTimeSpan: (id) => {},
   },
 })
 

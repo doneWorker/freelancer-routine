@@ -8,8 +8,6 @@ import { fetchProjects, projectsSelector } from '../store/slices/projectsSlice'
 import LanguageSwitcher from '../components/LanguageSwitcher'
 import ProjectList from '../components/Project.list'
 
-import { useTicker } from '../hooks/useTicker'
-
 /*
  * Main Page
  */
@@ -18,8 +16,6 @@ const Dashboard: React.FC = () => {
   const dispatch = useDispatch()
   const { t } = useTranslation()
   // const status = useMemo(() => projects.status, [projects.status]);
-
-  useTicker(useCallback(() => {}, []))
 
   // hydrate
   useEffect(() => {
