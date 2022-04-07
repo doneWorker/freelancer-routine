@@ -62,6 +62,8 @@ const TaskView: React.FC<Props> = ({
 
   useEffect(() => {
     setTimeout(() => ref.current?.style && (ref.current.style.width = '50vw'), 100)
+
+    return () => handleStopTimer()
   }, [])
 
   return (

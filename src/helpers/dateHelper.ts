@@ -32,8 +32,6 @@ export const getDurationHMS = (sec: number): string => {
   let mm = Math.floor((sec - hh * 3600) / 60) // get minutes
   let ss = sec - hh * 3600 - mm * 60
 
-  console.log(hh, mm, ss)
-
   return `${hh.toString().padStart(2, '0')}:${mm.toString().padStart(2, '0')}:${ss
     .toString()
     .padStart(2, '0')}`

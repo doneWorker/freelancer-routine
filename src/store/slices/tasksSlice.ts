@@ -121,10 +121,10 @@ export const createTask =
  */
 export const tasksSelector = (state: RootState): TasksState => state.tasks
 
-export const tasksSelectorById = (state: RootState, id: string): Task | undefined =>
-  state.tasks.list.find((t) => t.id === id)
+export const taskActiveSelector = (state: RootState): Task | undefined =>
+  state.tasks.list.find((t) => t.id === state.tasks.active)
 
-export const tasksActiveSelector = (state: RootState): string | undefined =>
+export const tasksActiveIdSelector = (state: RootState): string | undefined =>
   state.tasks.active
 
 export default tasksSlice.reducer

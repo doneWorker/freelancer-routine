@@ -29,7 +29,6 @@ const TagsInput: React.FC<Props> = ({ tags, onAdd, onRemove }) => {
   const handleClick = () => {}
 
   const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
-    console.log(e.key)
     if (e.key === 'Tab') {
       e.preventDefault()
       setList((list) => [
@@ -42,7 +41,6 @@ const TagsInput: React.FC<Props> = ({ tags, onAdd, onRemove }) => {
       ])
       e.currentTarget.value = ''
     } else if (e.key === 'Backspace') {
-      console.log('backspace')
       e.currentTarget.value.length === 0 &&
         setList((list) => list.filter((_, idx) => idx !== list.length - 1))
     }

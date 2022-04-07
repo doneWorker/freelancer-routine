@@ -19,10 +19,11 @@ import { RootState } from 'store'
 import {
   createTask,
   fetchTasks,
-  tasksSelector,
-  tasksActiveSelector,
   setActiveTask,
   update,
+  tasksSelector,
+  tasksActiveIdSelector,
+  taskActiveSelector,
 } from 'store/slices/tasksSlice'
 import Header from 'components/Header'
 import TaskRow from 'components/Task.row'
@@ -35,19 +36,21 @@ import { AiOutlinePlusCircle } from 'react-icons/ai'
  */
 const Project: React.FC = () => {
   const tasks = useSelector(tasksSelector)
-  const active = useSelector(tasksActiveSelector)
-  const activeTask = useSelector<RootState, Task | undefined>((state) =>
-    state.tasks.list.find((t) => t.id === active)
-  )
+  const active = useSelector(tasksActiveIdSelector)
+  const activeTask = useSelector(taskActiveSelector)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { projectId } = useParams()
   const [isTaskView, setIsTaskView] = useState<Boolean>(false)
 
-  const handleOpenTask = (taskId: string) => {
-    setIsTaskView((p) => !p)
-    navigate(`/project/${projectId}/${taskId}`)
-  }
+  const handleOpenTask = useCallback(
+    (taskId: string) => {
+      setIsTaskView(true)
+      typeof taskId === 'string' && dispatch(setActiveTask(taskId))
+      navigate(`/project/${projectId}/${taskId}`)
+    },
+    [projectId, dispatch, setIsTaskView, navigate]
+  )
 
   const handleAddTask = useCallback(async () => {
     if (projectId) {
@@ -107,7 +110,7 @@ const Project: React.FC = () => {
             </Table>
           </TableContainer>
           {isTaskView && (
-            <TaskView name={activeTask?.name} onTaskChange={handleChangeTask} />
+            <TaskView onTaskChange={handleChangeTask} {...activeTask} />
           )}
         </Flex>
       </Container>
