@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { Box, Button } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 
@@ -9,7 +10,7 @@ type Props = {
   isAbsolute?: boolean
 }
 
-const Header: React.FC<Props> = ({ isAbsolute = false }) => {
+const Header: React.FC<Props> = memo(({ isAbsolute = false }) => {
   const style = {
     display: 'flex',
     justifyContent: 'space-between',
@@ -32,6 +33,6 @@ const Header: React.FC<Props> = ({ isAbsolute = false }) => {
       <LanguageSwitcher />
     </Box>
   )
-}
+})
 
 export default Header

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback, useState, useMemo } from 'react'
+import { memo, useEffect, useRef, useCallback, useState, useMemo } from 'react'
 import {
   Box,
   Stack,
@@ -26,6 +26,54 @@ type Props = Partial<Task> & {
   onClose: () => void
 }
 
+type TaskHeaderProps = {
+  isTicking: boolean
+  formattedTimeSpent: string
+  onClose: () => void
+  handleStopTimer: () => void
+  handleStartTimer: () => void
+}
+const TaskHeader: React.FC<TaskHeaderProps> = memo(
+  ({
+    isTicking,
+    formattedTimeSpent,
+    onClose,
+    handleStopTimer,
+    handleStartTimer,
+  }) => {
+    return (
+      <HStack spacing={1} marginBottom={2} padding={'5px 0'}>
+        <IconButton
+          aria-label="Close Task"
+          size="sm"
+          icon={<GrClose />}
+          onClick={onClose}
+        />
+        <Button size="sm" leftIcon={<IoMdCheckmarkCircleOutline />}>
+          Complete
+        </Button>
+        <Button size="sm" leftIcon={<AiOutlinePlusCircle />}>
+          Add tags
+        </Button>
+        <ButtonGroup size="sm" isAttached spacing={0}>
+          <Button
+            size="sm"
+            mr="-px"
+            leftIcon={<HiOutlineClock />}
+            onClick={isTicking ? handleStopTimer : handleStartTimer}
+          >
+            {isTicking ? 'Pause' : 'Start'}
+          </Button>
+          <Button size="sm">Add time period</Button>
+        </ButtonGroup>
+        <Box ml="auto !important">
+          <Text>Working time: {formattedTimeSpent}</Text>
+        </Box>
+      </HStack>
+    )
+  }
+)
+
 const TaskView: React.FC<Props> = ({
   name,
   description,
@@ -37,7 +85,7 @@ const TaskView: React.FC<Props> = ({
   const ref = useRef<HTMLDivElement>(null)
   const formRef = useRef<HTMLFormElement>(null)
   const [time, setTime] = useState<number>(0)
-  const [isTicking, setIsTicking] = useState<Boolean>(false)
+  const [isTicking, setIsTicking] = useState<boolean>(false)
   const { addTickerListener, removeTickerListener } = useTicker()
 
   const tickerCallback = useCallback(() => {
@@ -81,34 +129,13 @@ const TaskView: React.FC<Props> = ({
       overflow="hidden"
     >
       <Box width={'50vw'} padding="0 1em">
-        <HStack spacing={1} marginBottom={2} padding={'5px 0'}>
-          <IconButton
-            aria-label="Close Task"
-            size="sm"
-            icon={<GrClose />}
-            onClick={onClose}
-          />
-          <Button size="sm" leftIcon={<IoMdCheckmarkCircleOutline />}>
-            Complete
-          </Button>
-          <Button size="sm" leftIcon={<AiOutlinePlusCircle />}>
-            Add tags
-          </Button>
-          <ButtonGroup size="sm" isAttached spacing={0}>
-            <Button
-              size="sm"
-              mr="-px"
-              leftIcon={<HiOutlineClock />}
-              onClick={isTicking ? handleStopTimer : handleStartTimer}
-            >
-              {isTicking ? 'Pause' : 'Start'}
-            </Button>
-            <Button size="sm">Add time period</Button>
-          </ButtonGroup>
-          <Box ml="auto !important">
-            <Text>Working time: {formattedTimeSpent}</Text>
-          </Box>
-        </HStack>
+        <TaskHeader
+          isTicking={isTicking}
+          formattedTimeSpent={formattedTimeSpent}
+          onClose={onClose}
+          handleStartTimer={handleStartTimer}
+          handleStopTimer={handleStopTimer}
+        />
         <form ref={formRef} onChange={updateForm}>
           <Stack spacing={3} minHeight="100vh">
             <TagsInput tags={[]} onAdd={() => {}} onRemove={() => {}} />

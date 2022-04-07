@@ -36,12 +36,16 @@ import { AiOutlinePlusCircle } from 'react-icons/ai'
  */
 const Project: React.FC = () => {
   const tasks = useSelector(tasksSelector)
-  const active = useSelector(tasksActiveIdSelector)
+  const activeId = useSelector(tasksActiveIdSelector)
   const activeTask = useSelector(taskActiveSelector)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { projectId } = useParams()
   const [isTaskView, setIsTaskView] = useState<Boolean>(false)
+
+  const handleCloseTask = useCallback(() => {
+    setIsTaskView(false)
+  }, [setIsTaskView])
 
   const handleOpenTask = useCallback(
     (taskId: string) => {
@@ -63,9 +67,9 @@ const Project: React.FC = () => {
 
   const handleChangeTask = useCallback(
     (key, val) => {
-      active !== undefined && dispatch(update({ id: active, key, val }))
+      activeId !== undefined && dispatch(update({ id: activeId, key, val }))
     },
-    [dispatch, active]
+    [dispatch, activeId]
   )
 
   // hydrate
@@ -101,11 +105,7 @@ const Project: React.FC = () => {
               </Thead>
               <Tbody>
                 {tasks.list.map((task) => (
-                  <TaskRow
-                    key={task.id}
-                    {...task}
-                    onClick={() => handleOpenTask(task.id)}
-                  />
+                  <TaskRow key={task.id} {...task} onClick={handleOpenTask} />
                 ))}
               </Tbody>
             </Table>
@@ -113,7 +113,7 @@ const Project: React.FC = () => {
           {isTaskView && (
             <TaskView
               onTaskChange={handleChangeTask}
-              onClose={() => setIsTaskView(false)}
+              onClose={handleCloseTask}
               {...activeTask}
             />
           )}
