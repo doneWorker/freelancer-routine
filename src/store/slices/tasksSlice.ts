@@ -1,8 +1,8 @@
-import { TimeSpan } from './../../models/Task'
+import { TimeSpan } from 'models/Task'
 import { AnyAction } from 'redux'
 import { ThunkAction } from './../../../node_modules/redux-thunk/src/types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { LoadingStatus } from '../../types/common'
+import { LoadingStatus } from 'types/common'
 import { RootState } from '../index'
 import { v4 as uuid } from 'uuid'
 
@@ -91,7 +91,7 @@ export const { load, create, update, drop, setLoadingStatus, setActiveTask } =
  */
 export const fetchTasks =
   (projectId: string): ThunkAction<void, RootState, unknown, AnyAction> =>
-  async (dispatch) => {
+  async (dispatch, getState) => {
     dispatch(setLoadingStatus(LoadingStatus.Loading))
     // dispatch(load(createMockTasks(5, projectId)))
 

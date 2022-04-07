@@ -30,7 +30,7 @@ import Header from 'components/Header'
 import TaskRow from 'components/tasks/Task.row'
 import TaskView from 'components/tasks/Task.view'
 
-import { AiOutlinePlusCircle } from 'react-icons/ai'
+import TasksActions from 'components/tasks/Tasks.actions'
 
 /*
  * Project's page
@@ -90,20 +90,12 @@ const Project: React.FC = () => {
   return (
     <>
       <Header center={<b>{projectName}</b>} />
-      <Button
-        margin={1}
-        size="sm"
-        leftIcon={<AiOutlinePlusCircle />}
-        onClick={handleAddTask}
-      >
-        Add Task
-      </Button>
-      Section: TODO
       <Container width="100%" maxWidth="100%">
         <Flex>
           <TableContainer width="100%">
+            <TasksActions onCreate={handleAddTask} />
+            {/* Section: TODO */}
             <Table>
-              <TableCaption placement="top">Project: {projectId}</TableCaption>
               <Thead>
                 <Tr>
                   <Th>Name</Th>

@@ -38,6 +38,10 @@ const TaskHeader: React.FC<TaskHeaderProps> = memo(
           aria-label="Close Task"
           size="sm"
           icon={<GrClose />}
+          transition="300ms"
+          _hover={{
+            borderRadius: '50%',
+          }}
           onClick={onClose}
         />
         <IconButton
@@ -46,6 +50,10 @@ const TaskHeader: React.FC<TaskHeaderProps> = memo(
           aria-label="complete"
           title="Complete"
           icon={<IoMdCheckmarkCircleOutline />}
+          transition="300ms"
+          _hover={{
+            borderRadius: '50%',
+          }}
         />
         <IconButton
           size="sm"
@@ -53,6 +61,10 @@ const TaskHeader: React.FC<TaskHeaderProps> = memo(
           aria-label="delete"
           title="Delete"
           icon={<BiTrash />}
+          transition="300ms"
+          _hover={{
+            borderRadius: '50%',
+          }}
           onClick={onDelete}
         />
         <Divider orientation="vertical" />

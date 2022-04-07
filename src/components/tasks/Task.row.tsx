@@ -44,7 +44,7 @@ const TaskCard: React.FC<Props> = memo(
 
     return (
       <Tr _hover={hoverStyles} {...extraStyles} onClick={() => onClick(id)}>
-        <Td>{name}</Td>
+        <Td fontWeight={isSelected ? 'bold' : undefined}>{name}</Td>
         <Td>{duration}</Td>
         <Td>{tags}</Td>
         <Td>{created}</Td>

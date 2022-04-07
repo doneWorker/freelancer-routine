@@ -16,7 +16,7 @@ const persistMiddleware: Middleware<{}, any> = (store) => (next) => (action) => 
 
 const getPreloadedState = (): any => {
   const appState = localStorage.getItem(LS_APP_KEY)
-  return appState ? JSON.parse(appState) : null
+  return appState ? JSON.parse(appState) : undefined
 }
 
 export const store = configureStore({
