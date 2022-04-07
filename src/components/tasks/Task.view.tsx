@@ -1,78 +1,17 @@
-import { memo, useEffect, useRef, useCallback, useState, useMemo } from 'react'
-import {
-  Box,
-  Stack,
-  HStack,
-  Input,
-  Textarea,
-  ButtonGroup,
-  Button,
-  Text,
-  IconButton,
-} from '@chakra-ui/react'
+import { useEffect, useRef, useCallback, useState, useMemo } from 'react'
+import { Box, Stack, Input, Textarea } from '@chakra-ui/react'
 
 import { Task } from 'models/Task'
 import { useTicker } from 'hooks/useTicker'
 import { getDurationHMS } from 'helpers/dateHelper'
 import TagsInput from 'components/common/Tags.input'
-
-import { HiOutlineClock } from 'react-icons/hi'
-import { IoMdCheckmarkCircleOutline } from 'react-icons/io'
-import { AiOutlinePlusCircle } from 'react-icons/ai'
-import { GrClose } from 'react-icons/gr'
+import TaskHeader from './Task.header'
 
 type Props = Partial<Task> & {
   onTaskChange: (key: string, val: any) => void
+  onDelete: () => void
   onClose: () => void
 }
-
-type TaskHeaderProps = {
-  isTicking: boolean
-  formattedTimeSpent: string
-  onClose: () => void
-  handleStopTimer: () => void
-  handleStartTimer: () => void
-}
-const TaskHeader: React.FC<TaskHeaderProps> = memo(
-  ({
-    isTicking,
-    formattedTimeSpent,
-    onClose,
-    handleStopTimer,
-    handleStartTimer,
-  }) => {
-    return (
-      <HStack spacing={1} marginBottom={2} padding={'5px 0'}>
-        <IconButton
-          aria-label="Close Task"
-          size="sm"
-          icon={<GrClose />}
-          onClick={onClose}
-        />
-        <Button size="sm" leftIcon={<IoMdCheckmarkCircleOutline />}>
-          Complete
-        </Button>
-        <Button size="sm" leftIcon={<AiOutlinePlusCircle />}>
-          Add tags
-        </Button>
-        <ButtonGroup size="sm" isAttached spacing={0}>
-          <Button
-            size="sm"
-            mr="-px"
-            leftIcon={<HiOutlineClock />}
-            onClick={isTicking ? handleStopTimer : handleStartTimer}
-          >
-            {isTicking ? 'Pause' : 'Start'}
-          </Button>
-          <Button size="sm">Add time period</Button>
-        </ButtonGroup>
-        <Box ml="auto !important">
-          <Text>Working time: {formattedTimeSpent}</Text>
-        </Box>
-      </HStack>
-    )
-  }
-)
 
 const TaskView: React.FC<Props> = ({
   name,
@@ -81,6 +20,7 @@ const TaskView: React.FC<Props> = ({
   timeSpent,
   onTaskChange,
   onClose,
+  onDelete,
 }) => {
   const ref = useRef<HTMLDivElement>(null)
   const formRef = useRef<HTMLFormElement>(null)
@@ -128,10 +68,11 @@ const TaskView: React.FC<Props> = ({
       borderColor="gray.100"
       overflow="hidden"
     >
-      <Box width={'50vw'} padding="0 1em">
+      <Box width="50vw" padding="0 1em">
         <TaskHeader
           isTicking={isTicking}
           formattedTimeSpent={formattedTimeSpent}
+          onDelete={onDelete}
           onClose={onClose}
           handleStartTimer={handleStartTimer}
           handleStopTimer={handleStopTimer}

@@ -14,20 +14,19 @@ import {
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useNavigate } from 'react-router'
 
-import { Task } from 'models/Task'
-import { RootState } from 'store'
 import {
   createTask,
   fetchTasks,
   setActiveTask,
   update,
+  drop,
   tasksSelector,
   tasksActiveIdSelector,
   taskActiveSelector,
 } from 'store/slices/tasksSlice'
 import Header from 'components/Header'
-import TaskRow from 'components/Task.row'
-import TaskView from 'components/Task.view'
+import TaskRow from 'components/tasks/Task.row'
+import TaskView from 'components/tasks/Task.view'
 
 import { AiOutlinePlusCircle } from 'react-icons/ai'
 
@@ -46,6 +45,12 @@ const Project: React.FC = () => {
   const handleCloseTask = useCallback(() => {
     setIsTaskView(false)
   }, [setIsTaskView])
+
+  const handleDeleteTask = useCallback(() => {
+    if (!activeId) return
+    dispatch(drop(activeId))
+    setIsTaskView(false)
+  }, [dispatch, activeId, setIsTaskView])
 
   const handleOpenTask = useCallback(
     (taskId: string) => {
@@ -114,6 +119,7 @@ const Project: React.FC = () => {
             <TaskView
               onTaskChange={handleChangeTask}
               onClose={handleCloseTask}
+              onDelete={handleDeleteTask}
               {...activeTask}
             />
           )}

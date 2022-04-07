@@ -63,6 +63,10 @@ export const tasksSlice = createSlice({
       const { key, val } = action.payload
       if (t && t !== undefined) (t as any)[key] = val
     },
+    drop: (state, action: PayloadAction<string>) => {
+      const idx = state.list.findIndex((t) => t.id === action.payload)
+      state.list.splice(idx, 1)
+    },
     createTimeSpan: (state, action: PayloadAction<CreateTimeSpan>) => {
       const t = state.list.find((t) => t.id === action.payload.taskId)
       if (t && t.timeSpans !== undefined && Array.isArray(t.timeSpans)) {
@@ -75,7 +79,7 @@ export const tasksSlice = createSlice({
   },
 })
 
-export const { load, create, update, setLoadingStatus, setActiveTask } =
+export const { load, create, update, drop, setLoadingStatus, setActiveTask } =
   tasksSlice.actions
 
 /*
