@@ -12,7 +12,7 @@ import {
   Button,
 } from '@chakra-ui/react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useParams, useNavigate } from 'react-router'
+import { useParams, useNavigate } from 'react-router-dom'
 
 import { RootState } from 'store'
 import { projectByIdSelector } from 'store/slices/projectsSlice'
@@ -36,6 +36,7 @@ import TasksActions from 'components/tasks/Tasks.actions'
  * Project's page
  */
 const Project: React.FC = () => {
+  console.log('Project page running')
   const tasks = useSelector(tasksSelector)
   const activeId = useSelector(tasksActiveIdSelector)
   const activeTask = useSelector(taskActiveSelector)

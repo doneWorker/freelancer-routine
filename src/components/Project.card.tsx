@@ -27,7 +27,6 @@ const ProjectCard: React.FC<Props> = (props) => {
   return (
     <Box
       key={props.id}
-      maxWidth={200}
       height={150}
       cursor="pointer"
       borderWidth="1px"
