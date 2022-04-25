@@ -1,3 +1,4 @@
+import React from 'react'
 import {
   Box,
   Heading,
@@ -18,15 +19,16 @@ import { BiTask, BiDollar } from 'react-icons/bi'
 type Props = Project & Clickable
 
 const ProjectCard: React.FC<Props> = (props) => {
-  const completePercentage =
-    props.tasksCompleted && props.tasksTotal
-      ? (props.tasksCompleted * 100) / props.tasksTotal
-      : 0
+  const {
+    id, tasksCompleted, tasksTotal, timeSpent, moneyEarned, name, onClick,
+  } = props
+
+  const completePercentage = tasksCompleted && tasksTotal ? (tasksCompleted * 100) / tasksTotal : 0
   const { t } = useTranslation()
 
   return (
     <Box
-      key={props.id}
+      key={id}
       height={150}
       cursor="pointer"
       borderWidth="1px"
@@ -39,11 +41,11 @@ const ProjectCard: React.FC<Props> = (props) => {
       _hover={{
         boxShadow: 'lg',
       }}
-      onClick={props.onClick}
+      onClick={onClick}
     >
       <Progress hasStripe value={completePercentage} h={1} />
       <Box p={6}>
-        <Heading fontSize="m">{props.name}</Heading>
+        <Heading fontSize="m">{name}</Heading>
       </Box>
       <Box
         borderTopWidth="1px"
@@ -59,7 +61,7 @@ const ProjectCard: React.FC<Props> = (props) => {
             justifyContent="space-between"
           >
             <Icon as={BsClock} />
-            <Text ml={2}>{props.timeSpent || '-'}</Text>
+            <Text ml={2}>{timeSpent || '-'}</Text>
           </Box>
         </Tooltip>
         <Divider orientation="vertical" />
@@ -71,7 +73,7 @@ const ProjectCard: React.FC<Props> = (props) => {
             justifyContent="space-between"
           >
             <Icon as={BsListTask} />
-            <Text ml={2}>{props.tasksTotal || '-'}</Text>
+            <Text ml={2}>{tasksTotal || '-'}</Text>
           </Box>
         </Tooltip>
         <Divider orientation="vertical" />
@@ -83,7 +85,7 @@ const ProjectCard: React.FC<Props> = (props) => {
             justifyContent="space-between"
           >
             <Icon as={BiTask} />
-            <Text ml={2}>{props.tasksCompleted || '-'}</Text>
+            <Text ml={2}>{tasksCompleted || '-'}</Text>
           </Box>
         </Tooltip>
         <Divider orientation="vertical" />
@@ -95,7 +97,7 @@ const ProjectCard: React.FC<Props> = (props) => {
             justifyContent="space-between"
           >
             <Icon as={BiDollar} />
-            <Text ml={2}>{props.moneyEarned || '-'}</Text>
+            <Text ml={2}>{moneyEarned || '-'}</Text>
           </Box>
         </Tooltip>
       </Box>

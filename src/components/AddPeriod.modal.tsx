@@ -1,3 +1,4 @@
+import React from 'react'
 import {
   Modal,
   ModalOverlay,
@@ -26,7 +27,7 @@ const AddPeriodModal: React.FC<Props> = ({ isOpen, onClose, onAdd }) => {
         <ModalHeader>Add period</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <form></form>
+          <form />
         </ModalBody>
         <ModalFooter>
           <Button colorScheme="blue" mr={3} onClick={onAdd}>

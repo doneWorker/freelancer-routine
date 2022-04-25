@@ -13,7 +13,9 @@ export const stdDatePattern: string = 'MM/dd/yyyy hh:mm a'
 export const formatDate = () => {}
 
 export const getDuration = (timeInSeconds: number): string => {
-  const { days, hours, minutes, seconds } = intervalToDuration({
+  const {
+    days, hours, minutes, seconds,
+  } = intervalToDuration({
     start: 0,
     end: timeInSeconds * MS_IN_SEC,
   })
@@ -28,9 +30,9 @@ export const getDuration = (timeInSeconds: number): string => {
 
 // Hours:Minutes:Seconds
 export const getDurationHMS = (sec: number): string => {
-  let hh = Math.floor(sec / 3600) // get hours
-  let mm = Math.floor((sec - hh * 3600) / 60) // get minutes
-  let ss = sec - hh * 3600 - mm * 60
+  const hh = Math.floor(sec / 3600) // get hours
+  const mm = Math.floor((sec - hh * 3600) / 60) // get minutes
+  const ss = sec - hh * 3600 - mm * 60
 
   return `${hh.toString().padStart(2, '0')}:${mm.toString().padStart(2, '0')}:${ss
     .toString()

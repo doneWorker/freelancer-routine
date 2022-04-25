@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import {
   Modal,
@@ -21,17 +21,18 @@ import { useTranslation } from 'react-i18next'
 import { PaymentType, Project } from 'models/Project'
 import { createProject } from 'store/slices/projectsSlice'
 
-type ModalType = 'new' | 'edit'
+// type ModalType = 'new' | 'edit'
 
 interface Props {
-  type: ModalType
+  // type: ModalType
   isOpen: boolean
   onClose: () => void
-  data?: Partial<Project>
+  // data?: Partial<Project>
 }
 
 type ProjectForm = HTMLFormElement &
   {
+    // eslint-disable-next-line no-unused-vars
     [K in keyof Project]: HTMLInputElement | HTMLTextAreaElement
   }
 
@@ -42,7 +43,7 @@ const defaultFormState: Partial<Project> = {
   hourlyRate: undefined,
 }
 
-const ProjectModal: React.FC<Props> = ({ isOpen, type, data, onClose }: Props) => {
+const ProjectModal: React.FC<Props> = ({ isOpen, onClose }: Props) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const formRef = useRef<ProjectForm>(null)
@@ -60,9 +61,9 @@ const ProjectModal: React.FC<Props> = ({ isOpen, type, data, onClose }: Props) =
   }
 
   const updateForm = (e: React.ChangeEvent<HTMLFormElement>) => {
-    let { name, value } = e.target
+    const { name, value } = e.target
 
-    setForm((form) => ({ ...form, [name]: value }))
+    setForm((updates) => ({ ...updates, [name]: value }))
   }
 
   return (

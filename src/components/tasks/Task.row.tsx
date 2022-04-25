@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react'
+import React, { memo, useMemo } from 'react'
 import { Tr, Td } from '@chakra-ui/react'
 
 import { Clickable } from 'types/common'
@@ -19,24 +19,18 @@ const TaskCard: React.FC<Props> = memo(
     isSelected,
     onClick = () => {},
   }) => {
-    const created = useMemo(() => {
-      return format(new Date(dateCreated), stdDatePattern)
-    }, [dateCreated])
+    const created = useMemo(() => format(new Date(dateCreated), stdDatePattern), [dateCreated])
 
-    const updated = useMemo(() => {
-      return format(new Date(dateUpdated), stdDatePattern)
-    }, [dateUpdated])
+    const updated = useMemo(() => format(new Date(dateUpdated), stdDatePattern), [dateUpdated])
 
-    const duration = useMemo(() => {
-      return getDuration(timeSpent)
-    }, [timeSpent])
+    const duration = useMemo(() => getDuration(timeSpent), [timeSpent])
 
     const hoverStyles = {
       cursor: 'pointer',
       background: 'gray.100',
       color: 'teal.500',
     }
-    let extraStyles = isSelected && {
+    const extraStyles = isSelected && {
       ...hoverStyles,
       borderLeftWidth: 5,
       borderColor: 'green.300',

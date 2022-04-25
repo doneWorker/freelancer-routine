@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import {
   Container,
   Table,
@@ -12,7 +12,6 @@ import {
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
 
-import { RootState } from 'store'
 import { projectByIdSelector } from 'store/slices/projectsSlice'
 import {
   createTask,
@@ -33,18 +32,17 @@ import TasksActions from 'components/tasks/Tasks.actions'
 /*
  * Project's page
  */
+
 const Project: React.FC = () => {
-  console.log('Project page running')
   const tasks = useSelector(tasksSelector)
   const activeId = useSelector(tasksActiveIdSelector)
   const activeTask = useSelector(taskActiveSelector)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { projectId } = useParams()
-  const projectName = useSelector((s: RootState) =>
-    projectByIdSelector(s, projectId),
-  )?.name
+  const currentProject = useSelector(projectByIdSelector(projectId))
   const [isTaskView, setIsTaskView] = useState<Boolean>(false)
+  const projectName = currentProject?.name
 
   const handleCloseTask = useCallback(() => {
     setIsTaskView(false)
@@ -54,12 +52,12 @@ const Project: React.FC = () => {
     if (!activeId) return
     dispatch(drop(activeId))
     setIsTaskView(false)
-  }, [dispatch, activeId, setIsTaskView])
+  }, [activeId, dispatch, setIsTaskView])
 
   const handleOpenTask = useCallback(
     (taskId: string) => {
       setIsTaskView(true)
-      typeof taskId === 'string' && dispatch(setActiveTask(taskId))
+      dispatch(setActiveTask(taskId))
       navigate(`/project/${projectId}/${taskId}`)
     },
     [projectId, dispatch, setIsTaskView, navigate],
@@ -68,27 +66,29 @@ const Project: React.FC = () => {
   const handleAddTask = useCallback(async () => {
     if (projectId) {
       const taskId: unknown = await dispatch(createTask(projectId))
-      typeof taskId === 'string' && dispatch(setActiveTask(taskId))
+      if (typeof taskId === 'string') dispatch(setActiveTask(taskId))
 
       navigate(`/project/${projectId}/${taskId}`)
     }
-  }, [dispatch, navigate, projectId])
+  }, [projectId, dispatch, navigate])
 
   const handleChangeTask = useCallback(
     (key, val) => {
-      activeId !== undefined && dispatch(update({ id: activeId, key, val }))
+      if (activeId !== undefined) dispatch(update({ id: activeId, key, val }))
     },
-    [dispatch, activeId],
+    [activeId, dispatch],
   )
 
   // hydrate
   useEffect(() => {
     if (projectId !== undefined) dispatch(fetchTasks(projectId))
-  }, [dispatch, projectId])
+  }, [projectId, dispatch])
+
+  const headerTitle = <b>{projectName}</b>
 
   return (
     <>
-      <Header center={<b>{projectName}</b>} />
+      <Header center={headerTitle} />
       <Container width="100%" maxWidth="100%">
         <Flex>
           <TableContainer width="100%">
@@ -108,9 +108,9 @@ const Project: React.FC = () => {
                 {tasks.list.map((task) => (
                   <TaskRow
                     key={task.id}
-                    {...task}
                     isSelected={isTaskView && task.id === activeId}
                     onClick={handleOpenTask}
+                    {...task}
                   />
                 ))}
               </Tbody>

@@ -1,12 +1,10 @@
-import { AnyAction } from 'redux'
-import { ThunkAction } from 'redux-thunk/src/types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { v4 as uuid } from 'uuid'
 
-import { RootState } from '../index'
+import { LoadingStatus } from 'types/common'
+import { TaskTag } from 'models/Task'
+import { AsyncAction, RootState } from '../index'
 import { createMockTags } from './mocks'
-import { TaskTag } from './../../models/Task'
-import { LoadingStatus } from '../../types/common'
 
 export interface TagsState {
   status: LoadingStatus
@@ -40,30 +38,27 @@ export const tagsSlice = createSlice({
 /*
  * Actions
  */
-export const { load, create, remove, setLoadingStatus } = tagsSlice.actions
+export const {
+  load, create, remove, setLoadingStatus,
+} = tagsSlice.actions
 
 /*
  * Async Actions
  */
-export const fetchTags =
-  (): ThunkAction<void, RootState, unknown, AnyAction> => async (dispatch) => {
-    dispatch(setLoadingStatus(LoadingStatus.Loading))
-    dispatch(load(createMockTags(5)))
+export const fetchTags = (): AsyncAction => async (dispatch) => {
+  dispatch(setLoadingStatus(LoadingStatus.Loading))
+  dispatch(load(createMockTags(5)))
 
-    window.setTimeout(
-      () => dispatch(setLoadingStatus(LoadingStatus.Succeeded)),
-      2_000,
-    )
-  }
+  window.setTimeout(() => dispatch(setLoadingStatus(LoadingStatus.Succeeded)), 2_000)
+}
 
 const DEFAULT_COLOR = '#ccc'
-export const createProject =
-  (derivedTag: Partial<TaskTag>): ThunkAction<void, RootState, unknown, AnyAction> =>
+export const createProject = (derivedTag: Partial<TaskTag>): AsyncAction =>
   async (dispatch) => {
     const defaultTag: TaskTag = {
       id: uuid(),
-      color: DEFAULT_COLOR,
       name: '',
+      color: DEFAULT_COLOR,
     }
 
     const createdTag: TaskTag = { ...defaultTag, ...derivedTag }

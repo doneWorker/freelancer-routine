@@ -1,12 +1,10 @@
-import { TimeSpan } from 'models/Task'
-import { AnyAction } from 'redux'
-import { ThunkAction } from './../../../node_modules/redux-thunk/src/types'
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { LoadingStatus } from 'types/common'
-import { RootState } from '../index'
 import { v4 as uuid } from 'uuid'
 
-import { Task, TaskStatus } from '../../models/Task'
+import { LoadingStatus } from 'types/common'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { AsyncAction, RootState } from '../index'
+
+import { Task, TaskStatus, TimeSpan } from '../../models/Task'
 // import { createMockTasks } from './mocks'
 
 export interface TasksState {
@@ -49,7 +47,7 @@ export const tasksSlice = createSlice({
       state.active = action.payload
     },
     setStatus: (state, action: PayloadAction<StatusPayloadAction>) => {
-      const t = state.list.find((t) => t.id === action.payload.id)
+      const t = state.list.find((li) => li.id === action.payload.id)
       if (t && t !== undefined) t.status = action.payload.status
     },
     load: (state, action: PayloadAction<Task[]>) => {
@@ -59,7 +57,7 @@ export const tasksSlice = createSlice({
       state.list.push(action.payload)
     },
     update: (state, action: PayloadAction<UpdateTask>) => {
-      const t = state.list.find((t) => t.id === action.payload.id)
+      const t = state.list.find((li) => li.id === action.payload.id)
       const { key, val } = action.payload
       if (t && t !== undefined) (t as any)[key] = val
     },
@@ -68,19 +66,20 @@ export const tasksSlice = createSlice({
       state.list.splice(idx, 1)
     },
     createTimeSpan: (state, action: PayloadAction<CreateTimeSpan>) => {
-      const t = state.list.find((t) => t.id === action.payload.taskId)
+      const t = state.list.find((li) => li.id === action.payload.taskId)
       if (t && t.timeSpans !== undefined && Array.isArray(t.timeSpans)) {
         const ts: TimeSpan = [action.payload.timeStart]
         action.payload.timeEnd && (ts[1] = action.payload.timeEnd)
         t.timeSpans.push(ts)
       }
     },
-    completeTimeSpan: (id) => {},
+    // completeTimeSpan: (id) => {},
   },
 })
 
-export const { load, create, update, drop, setLoadingStatus, setActiveTask } =
-  tasksSlice.actions
+export const {
+  load, create, update, drop, setLoadingStatus, setActiveTask,
+} = tasksSlice.actions
 
 /*
  * Actions
@@ -89,20 +88,14 @@ export const { load, create, update, drop, setLoadingStatus, setActiveTask } =
 /*
  * Async Actions
  */
-export const fetchTasks =
-  (projectId: string): ThunkAction<void, RootState, unknown, AnyAction> =>
-  async (dispatch, getState) => {
-    dispatch(setLoadingStatus(LoadingStatus.Loading))
-    // dispatch(load(createMockTasks(5, projectId)))
+export const fetchTasks = (): AsyncAction => async (dispatch) => {
+  dispatch(setLoadingStatus(LoadingStatus.Loading))
+  // dispatch(load(createMockTasks(5, projectId)))
 
-    window.setTimeout(
-      () => dispatch(setLoadingStatus(LoadingStatus.Succeeded)),
-      2_000,
-    )
-  }
+  window.setTimeout(() => dispatch(setLoadingStatus(LoadingStatus.Succeeded)), 2_000)
+}
 
-export const createTask =
-  (projectId: string): ThunkAction<void, RootState, unknown, AnyAction> =>
+export const createTask = (projectId: string): AsyncAction =>
   async (dispatch): Promise<string> => {
     const d = Date()
     const id = uuid()
@@ -110,7 +103,7 @@ export const createTask =
       id,
       name: '',
       description: '',
-      projectId: projectId,
+      projectId,
       isCompleted: false,
       dateCreated: d,
       dateUpdated: d,

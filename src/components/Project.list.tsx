@@ -1,4 +1,6 @@
-import { Box, Center, Heading, SimpleGrid, useDisclosure } from '@chakra-ui/react'
+import {
+  Box, Center, Heading, SimpleGrid, useDisclosure,
+} from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
@@ -33,7 +35,7 @@ const ProjectsList = ({ list }: ProjectsListProps) => {
           p={5}
           height={150}
           borderWidth={2}
-          borderStyle={'dotted'}
+          borderStyle="dotted"
           borderRadius="lg"
           overflow="hidden"
           transition="0.3s"
@@ -49,7 +51,7 @@ const ProjectsList = ({ list }: ProjectsListProps) => {
           </Center>
         </Box>
       </SimpleGrid>
-      <ProjectModal type="new" isOpen={isOpen} onClose={onClose} />
+      <ProjectModal isOpen={isOpen} onClose={onClose} />
     </>
   )
 }

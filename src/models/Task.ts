@@ -12,6 +12,11 @@ export type TaskPhase = {
 
 export type TimeSpan = [string, string?]
 
+export type TaskStatus = {
+  id: string
+  name: string
+}
+
 export type Task = {
   id: string
   name: string
@@ -27,9 +32,4 @@ export type Task = {
   timeSpans?: Array<TimeSpan>
   tags?: Array<TaskTag>
   status?: TaskStatus
-}
-
-export type TaskStatus = {
-  id: string
-  name: string
 }

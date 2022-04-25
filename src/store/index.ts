@@ -1,5 +1,5 @@
-import { Middleware } from 'redux'
-import { configureStore } from '@reduxjs/toolkit'
+import { AnyAction, Middleware } from 'redux'
+import { configureStore, ThunkAction } from '@reduxjs/toolkit'
 
 import projectsReducer from './slices/projectsSlice'
 import tasksReducer from './slices/tasksSlice'
@@ -33,3 +33,4 @@ export const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
+export type AsyncAction = ThunkAction<void, RootState, unknown, AnyAction>

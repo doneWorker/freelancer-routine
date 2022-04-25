@@ -1,4 +1,4 @@
-import { memo } from 'react'
+import React, { memo } from 'react'
 import { Box, Button } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 
@@ -8,7 +8,7 @@ import { MdDashboard } from 'react-icons/md'
 
 type Props = {
   isAbsolute?: boolean
-  center?: JSX.Element
+  center?: React.ReactNode
 }
 
 const Header: React.FC<Props> = memo(({ isAbsolute = false, center = null }) => {

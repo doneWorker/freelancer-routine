@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-unused-vars */
 export enum PaymentType {
   Hourly = 'Hourly',
   Project = 'Project',

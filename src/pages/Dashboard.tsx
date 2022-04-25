@@ -1,5 +1,7 @@
-import { useEffect } from 'react'
-import { Container, Box, Heading, Divider, Stack } from '@chakra-ui/react'
+import React, { useEffect } from 'react'
+import {
+  Container, Box, Heading, Divider, Stack,
+} from '@chakra-ui/react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
@@ -29,7 +31,7 @@ const Dashboard: React.FC = () => {
 
       <Container maxW="container.lg">
         <section id="projects">
-          <Heading p={5} fontSize={'xl'}>
+          <Heading p={5} fontSize="xl">
             {t('dashboard.MY_PROJECTS')}
           </Heading>
           <Divider mb={10} />
@@ -40,7 +42,7 @@ const Dashboard: React.FC = () => {
       {status === LoadingStatus.Succeeded && <>Succeed...</>}
       {status === LoadingStatus.Idle && <>Idle...</>} */}
         <section id="recent-tasks">
-          <Heading mt={12} p={5} fontSize={'xl'}>
+          <Heading mt={12} p={5} fontSize="xl">
             {t('dashboard.RECENT_TASKS')}
           </Heading>
           <Divider mb={10} />
@@ -54,7 +56,7 @@ const Dashboard: React.FC = () => {
         </section>
 
         <section id="stats">
-          <Heading mt={12} p={5} fontSize={'xl'}>
+          <Heading mt={12} p={5} fontSize="xl">
             {t('dashboard.STATS')}
           </Heading>
           <Divider mb={10} />

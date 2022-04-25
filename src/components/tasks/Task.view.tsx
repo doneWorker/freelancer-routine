@@ -1,13 +1,18 @@
-import { useEffect, useRef, useCallback, useState, useMemo } from 'react'
-import { Box, Stack, Input, Textarea } from '@chakra-ui/react'
+import React, {
+  useEffect, useRef, useCallback, useState, useMemo,
+} from 'react'
+import {
+  Box, Stack, Input, Textarea,
+} from '@chakra-ui/react'
 
 import { Task } from 'models/Task'
-import { useTicker } from 'hooks/useTicker'
+import useTicker from 'hooks/useTicker'
 import { getDurationHMS } from 'helpers/dateHelper'
 import TagsInput from 'components/common/Tags.input'
 import TaskHeader from './Task.header'
 
 type Props = Partial<Task> & {
+  // eslint-disable-next-line no-unused-vars
   onTaskChange: (key: string, val: any) => void
   onDelete: () => void
   onClose: () => void
@@ -17,10 +22,9 @@ const TaskView: React.FC<Props> = ({
   name,
   description,
   extLink,
-  timeSpent,
   onTaskChange,
-  onClose,
   onDelete,
+  onClose,
 }) => {
   const ref = useRef<HTMLDivElement>(null)
   const formRef = useRef<HTMLFormElement>(null)
@@ -29,13 +33,13 @@ const TaskView: React.FC<Props> = ({
   const { addTickerListener, removeTickerListener } = useTicker()
 
   const tickerCallback = useCallback(() => {
-    setTime((p) => ++p)
+    setTime((p) => p + 1)
   }, [setTime])
 
   const updateForm = (e: React.ChangeEvent<HTMLFormElement>) => {
-    let { name, value } = e.target
+    const { field, value } = e.target
 
-    onTaskChange(name, value)
+    onTaskChange(field, value)
   }
 
   const handleStartTimer = useCallback(() => {
@@ -48,12 +52,12 @@ const TaskView: React.FC<Props> = ({
     removeTickerListener(tickerCallback)
   }, [removeTickerListener, tickerCallback, setIsTicking])
 
-  const formattedTimeSpent = useMemo(() => {
-    return getDurationHMS(time)
-  }, [time])
+  const formattedTimeSpent = useMemo(() => getDurationHMS(time), [time])
 
   useEffect(() => {
-    setTimeout(() => ref.current?.style && (ref.current.style.width = '50vw'), 100)
+    setTimeout(() => {
+      ref.current?.style && (ref.current.style.width = '50vw')
+    }, 100)
 
     return () => handleStopTimer()
   }, [])

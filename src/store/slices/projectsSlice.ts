@@ -1,8 +1,7 @@
-import { AnyAction } from 'redux'
-import { ThunkAction } from './../../../node_modules/redux-thunk/src/types'
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { RootState } from '../index'
 import { v4 as uuid } from 'uuid'
+import { AnyAction } from 'redux'
+import { createSlice, PayloadAction, ThunkAction } from '@reduxjs/toolkit'
+import { RootState } from '../index'
 
 import { LoadingStatus } from '../../types/common'
 import { PaymentType, Project } from '../../models/Project'
@@ -39,13 +38,15 @@ export const projectSlice = createSlice({
 /*
  * Actions
  */
-export const { load, create, update, setLoadingStatus } = projectSlice.actions
+export const {
+  load, create, update, setLoadingStatus,
+} = projectSlice.actions
 
 /*
  * Async Actions
  */
-export const fetchProjects =
-  (): ThunkAction<void, RootState, unknown, AnyAction> => async (dispatch) => {
+export const fetchProjects = (): ThunkAction<void, RootState, unknown, AnyAction> =>
+  async (dispatch) => {
     dispatch(setLoadingStatus(LoadingStatus.Loading))
     // dispatch(load(createMockProjects(5)))
 
@@ -57,10 +58,9 @@ export const fetchProjects =
 
 const DEFAULT_PROJECT_NAME: string = 'Awesome Project'
 
-export const createProject =
-  (
-    derivedProject: Partial<Project>,
-  ): ThunkAction<void, RootState, unknown, AnyAction> =>
+export const createProject = (
+  derivedProject: Partial<Project>,
+): ThunkAction<void, RootState, unknown, AnyAction> =>
   async (dispatch) => {
     const d = Date()
     const defaultProject: Project = {
@@ -81,9 +81,9 @@ export const createProject =
  */
 export const projectsSelector = (state: RootState): ProjectsState => state.projects
 
-export const projectByIdSelector = (
-  state: RootState,
-  id: string | undefined,
-): Project | undefined => state.projects.list.find((p) => p.id === id)
+// little of `curry` here
+export const projectByIdSelector = (id: string | undefined) =>
+  (state: RootState): Project | undefined =>
+    state.projects.list.find((p) => p.id === id)
 
 export default projectSlice.reducer

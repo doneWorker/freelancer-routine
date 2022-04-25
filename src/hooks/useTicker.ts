@@ -9,7 +9,7 @@ const DELAY = 1_000
 
 type Callback = () => void
 
-export const useTicker = () => {
+const useTicker = () => {
   const interval = useRef<ReturnType<typeof setTimeout> | null>(null)
   const callbacks = useRef<Callback[]>([])
 
@@ -35,3 +35,5 @@ export const useTicker = () => {
 
   return { addTickerListener, removeTickerListener }
 }
+
+export default useTicker

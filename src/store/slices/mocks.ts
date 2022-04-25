@@ -1,8 +1,8 @@
 import { v4 as uuid } from 'uuid'
 
-import { Task, TaskTag } from './../../models/Task'
-import { PaymentType, Project } from '../../models/Project'
-import { getRandomColor, getRandomInteger } from '../../helpers/random'
+import { Task, TaskTag } from 'models/Task'
+import { PaymentType, Project } from 'models/Project'
+import { getRandomColor, getRandomInteger } from 'helpers/random'
 
 /*
  * Mocks for projects
@@ -10,7 +10,7 @@ import { getRandomColor, getRandomInteger } from '../../helpers/random'
 export const createMockProjects = (total: number = 1): Project[] => {
   const out: Project[] = []
 
-  for (let i = 0; i < total; i++) {
+  for (let i = 0; i < total; i += 1) {
     out.push({
       id: uuid(),
       img: 'link/to/image',
@@ -38,7 +38,7 @@ export const createMockTasks = (
 ): Task[] => {
   const out: Task[] = []
 
-  for (let i = 0; i < total; i++) {
+  for (let i = 0; i < total; i += 1) {
     out.push({
       id: uuid(),
       name: `Task #${i}`,
@@ -61,7 +61,7 @@ export const createMockTasks = (
 export const createMockTags = (total: number = 1): TaskTag[] => {
   const out: TaskTag[] = []
 
-  for (let i = 0; i < total; i++) {
+  for (let i = 0; i < total; i += 1) {
     out.push({
       id: uuid(),
       name: '',

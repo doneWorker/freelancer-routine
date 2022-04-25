@@ -1,4 +1,4 @@
-import { CSSProperties, useCallback } from 'react'
+import React, { CSSProperties, useCallback } from 'react'
 import {
   Box,
   Button,
@@ -10,28 +10,28 @@ import {
 } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 
-import { ReactComponent as FlagRu } from '../../node_modules/flag-icons/flags/4x3/ru.svg'
-import { ReactComponent as FlagEn } from '../../node_modules/flag-icons/flags/4x3/gb.svg'
 import { GrLanguage } from 'react-icons/gr'
+import { ReactComponent as FlagRu } from 'flag-icons/flags/4x3/ru.svg'
+import { ReactComponent as FlagEn } from 'flag-icons/flags/4x3/gb.svg'
 
 interface Props {
   style?: CSSProperties
 }
 
-const LanguageSwitcher: React.FC<Props> = ({ style = {} }) => {
+const LanguageSwitcher: React.FC<Props> = ({ style }) => {
   const { t, i18n } = useTranslation()
 
   const lang = i18n.language
 
   const setLang = useCallback(
-    (lang: string) => {
-      i18n.changeLanguage(lang)
+    (newLang: string) => {
+      i18n.changeLanguage(newLang)
     },
     [i18n],
   )
 
   return (
-    <Box style={style}>
+    <Box style={style || {}}>
       <Menu>
         <MenuButton
           display="flex"
