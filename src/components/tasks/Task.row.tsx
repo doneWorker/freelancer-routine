@@ -51,7 +51,7 @@ const TaskCard: React.FC<Props> = memo(
         <Td>{updated}</Td>
       </Tr>
     )
-  }
+  },
 )
 
 export default TaskCard

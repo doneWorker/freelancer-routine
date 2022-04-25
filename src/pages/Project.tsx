@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, useMemo } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import {
   Container,
   Table,
@@ -6,10 +6,8 @@ import {
   Tbody,
   Tr,
   Th,
-  TableCaption,
   TableContainer,
   Flex,
-  Button,
 } from '@chakra-ui/react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
@@ -44,7 +42,7 @@ const Project: React.FC = () => {
   const navigate = useNavigate()
   const { projectId } = useParams()
   const projectName = useSelector((s: RootState) =>
-    projectByIdSelector(s, projectId)
+    projectByIdSelector(s, projectId),
   )?.name
   const [isTaskView, setIsTaskView] = useState<Boolean>(false)
 
@@ -64,7 +62,7 @@ const Project: React.FC = () => {
       typeof taskId === 'string' && dispatch(setActiveTask(taskId))
       navigate(`/project/${projectId}/${taskId}`)
     },
-    [projectId, dispatch, setIsTaskView, navigate]
+    [projectId, dispatch, setIsTaskView, navigate],
   )
 
   const handleAddTask = useCallback(async () => {
@@ -80,7 +78,7 @@ const Project: React.FC = () => {
     (key, val) => {
       activeId !== undefined && dispatch(update({ id: activeId, key, val }))
     },
-    [dispatch, activeId]
+    [dispatch, activeId],
   )
 
   // hydrate

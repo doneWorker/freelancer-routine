@@ -1,10 +1,10 @@
 import { createRoot } from 'react-dom/client'
-import reportWebVitals from './reportWebVitals'
-import * as serviceWorker from './serviceWorker'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
+import reportWebVitals from './reportWebVitals'
+import * as serviceWorker from './serviceWorker'
 
 import App from './App'
 import { store } from './store'
@@ -44,7 +44,7 @@ root.render(
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </Provider>
+  </Provider>,
   // </React.StrictMode>
 )
 

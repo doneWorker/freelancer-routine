@@ -97,7 +97,7 @@ export const fetchTasks =
 
     window.setTimeout(
       () => dispatch(setLoadingStatus(LoadingStatus.Succeeded)),
-      2_000
+      2_000,
     )
   }
 

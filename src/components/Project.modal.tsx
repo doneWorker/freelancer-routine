@@ -30,9 +30,10 @@ interface Props {
   data?: Partial<Project>
 }
 
-type ProjectForm = HTMLFormElement & {
-  [K in keyof Project]: HTMLInputElement | HTMLTextAreaElement
-}
+type ProjectForm = HTMLFormElement &
+  {
+    [K in keyof Project]: HTMLInputElement | HTMLTextAreaElement
+  }
 
 const defaultFormState: Partial<Project> = {
   name: '',

@@ -51,7 +51,7 @@ export const fetchProjects =
 
     window.setTimeout(
       () => dispatch(setLoadingStatus(LoadingStatus.Succeeded)),
-      2_000
+      2_000,
     )
   }
 
@@ -59,7 +59,7 @@ const DEFAULT_PROJECT_NAME: string = 'Awesome Project'
 
 export const createProject =
   (
-    derivedProject: Partial<Project>
+    derivedProject: Partial<Project>,
   ): ThunkAction<void, RootState, unknown, AnyAction> =>
   async (dispatch) => {
     const d = Date()
@@ -83,7 +83,7 @@ export const projectsSelector = (state: RootState): ProjectsState => state.proje
 
 export const projectByIdSelector = (
   state: RootState,
-  id: string | undefined
+  id: string | undefined,
 ): Project | undefined => state.projects.list.find((p) => p.id === id)
 
 export default projectSlice.reducer

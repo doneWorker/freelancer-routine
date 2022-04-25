@@ -1,6 +1,7 @@
 // import { lazy } from "react";
-import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import { Routes, Route } from 'react-router-dom'
+import { ChakraProvider, extendTheme } from '@chakra-ui/react'
+
 import Dashboard from './pages/Dashboard'
 import Project from './pages/Project'
 

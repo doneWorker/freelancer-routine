@@ -34,7 +34,7 @@ export const createMockProjects = (total: number = 1): Project[] => {
  */
 export const createMockTasks = (
   total: number = 1,
-  projectId: string = '0'
+  projectId: string = '0',
 ): Task[] => {
   const out: Task[] = []
 

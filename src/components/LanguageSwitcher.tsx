@@ -27,7 +27,7 @@ const LanguageSwitcher: React.FC<Props> = ({ style = {} }) => {
     (lang: string) => {
       i18n.changeLanguage(lang)
     },
-    [i18n]
+    [i18n],
   )
 
   return (

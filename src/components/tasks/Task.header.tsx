@@ -87,7 +87,7 @@ const TaskHeader: React.FC<TaskHeaderProps> = memo(
         </Box>
       </HStack>
     )
-  }
+  },
 )
 
 export default TaskHeader
