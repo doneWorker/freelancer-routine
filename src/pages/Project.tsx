@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import {
   Container,
   Table,
@@ -15,7 +15,6 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { projectByIdSelector } from 'store/slices/projectsSlice'
 import {
   createTask,
-  fetchTasks,
   setActiveTask,
   update,
   drop,
@@ -80,9 +79,9 @@ const Project: React.FC = () => {
   )
 
   // hydrate
-  useEffect(() => {
-    if (projectId !== undefined) dispatch(fetchTasks(projectId))
-  }, [projectId, dispatch])
+  // useEffect(() => {
+  //   if (projectId !== undefined) dispatch(fetchTasks(projectId))
+  // }, [projectId, dispatch])
 
   const headerTitle = <b>{projectName}</b>
 

@@ -1,8 +1,9 @@
 import { v4 as uuid } from 'uuid'
 import { AnyAction } from 'redux'
 import { createSlice, PayloadAction, ThunkAction } from '@reduxjs/toolkit'
-import { RootState } from '../index'
 
+import * as api from 'api/projects'
+import { RootState } from '../index'
 import { LoadingStatus } from '../../types/common'
 import { PaymentType, Project } from '../../models/Project'
 
@@ -49,11 +50,14 @@ export const fetchProjects = (): ThunkAction<void, RootState, unknown, AnyAction
   async (dispatch) => {
     dispatch(setLoadingStatus(LoadingStatus.Loading))
     // dispatch(load(createMockProjects(5)))
+    const resp = await api.fetchProjects()
+    console.log('resp', resp)
 
-    window.setTimeout(
-      () => dispatch(setLoadingStatus(LoadingStatus.Succeeded)),
-      2_000,
-    )
+    if (resp?.list) {
+      dispatch(load(resp.list))
+    }
+
+    dispatch(setLoadingStatus(LoadingStatus.Succeeded))
   }
 
 const DEFAULT_PROJECT_NAME: string = 'Awesome Project'
