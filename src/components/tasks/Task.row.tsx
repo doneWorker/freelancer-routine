@@ -19,9 +19,15 @@ const TaskCard: React.FC<Props> = memo(
     isSelected,
     onClick = () => {},
   }) => {
-    const created = useMemo(() => format(new Date(dateCreated), stdDatePattern), [dateCreated])
+    const created = useMemo(
+      () => dateCreated && format(new Date(dateCreated), stdDatePattern),
+      [dateCreated],
+    )
 
-    const updated = useMemo(() => format(new Date(dateUpdated), stdDatePattern), [dateUpdated])
+    const updated = useMemo(
+      () => dateUpdated && format(new Date(dateUpdated), stdDatePattern),
+      [dateUpdated],
+    )
 
     const duration = useMemo(() => getDuration(timeSpent), [timeSpent])
 

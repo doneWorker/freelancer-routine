@@ -1,6 +1,9 @@
 import axios from 'axios'
 
-const { API_URL } = process.env
+import { Task } from 'models/Task'
+import { ListResponse, responseIsSuccess } from './common'
+
+const API_URL = 'http://localhost:5000'
 
 export const getTaskById = async (id: string) => {
   const url = `${API_URL}/task/${id}`
@@ -9,12 +12,16 @@ export const getTaskById = async (id: string) => {
   return res
 }
 
-export const fetchTasksByProjectId = async (id: string) => {
+export const fetchTasksByProjectId = async (
+  id: string,
+): Promise<ListResponse<Task>> => {
   const url = `${API_URL}/project/${id}/tasks`
-  const res = await axios.get(url)
+  const resp = await axios.get(url)
 
-  return res
+  return responseIsSuccess(resp) ? resp.data : null
 }
+
+// export const fetchTasks = async = async =
 
 export const completeTask = async (id: string) => {
   const url = `${API_URL}/task/${id}/complete`

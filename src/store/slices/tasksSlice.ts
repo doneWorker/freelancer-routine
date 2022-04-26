@@ -1,5 +1,6 @@
 import { v4 as uuid } from 'uuid'
 
+import * as api from 'api/tasks'
 import { LoadingStatus } from 'types/common'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AsyncAction, RootState } from '../index'
@@ -88,11 +89,16 @@ export const {
 /*
  * Async Actions
  */
-export const fetchTasks = (): AsyncAction => async (dispatch) => {
+export const fetchTasks = (projectId: string): AsyncAction => async (dispatch) => {
   dispatch(setLoadingStatus(LoadingStatus.Loading))
-  // dispatch(load(createMockTasks(5, projectId)))
+  const resp = await api.fetchTasksByProjectId(projectId)
 
-  window.setTimeout(() => dispatch(setLoadingStatus(LoadingStatus.Succeeded)), 2_000)
+  if (resp === null) {
+    dispatch(setLoadingStatus(LoadingStatus.Failed))
+  } else {
+    dispatch(load(resp.list))
+    dispatch(setLoadingStatus(LoadingStatus.Succeeded))
+  }
 }
 
 export const createTask = (projectId: string): AsyncAction =>

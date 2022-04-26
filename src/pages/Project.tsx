@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import {
   Container,
   Table,
@@ -21,6 +21,7 @@ import {
   tasksSelector,
   tasksActiveIdSelector,
   taskActiveSelector,
+  fetchTasks,
 } from 'store/slices/tasksSlice'
 import Header from 'components/Header'
 import TaskRow from 'components/tasks/Task.row'
@@ -79,9 +80,9 @@ const Project: React.FC = () => {
   )
 
   // hydrate
-  // useEffect(() => {
-  //   if (projectId !== undefined) dispatch(fetchTasks(projectId))
-  // }, [projectId, dispatch])
+  useEffect(() => {
+    if (projectId !== undefined) dispatch(fetchTasks(projectId))
+  }, [projectId, dispatch])
 
   const headerTitle = <b>{projectName}</b>
 
