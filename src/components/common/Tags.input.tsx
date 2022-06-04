@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { KeyboardEventHandler, useState } from 'react'
+import { KeyboardEventHandler, useState, memo } from 'react'
 import {
   HStack,
   Text,
@@ -13,9 +13,9 @@ import {
 import { TaskTag } from 'models/Task'
 
 interface Props {
-  tags: TaskTag[]
-  onAdd: (tag: Partial<TaskTag>) => void
-  onRemove: (id: string) => void
+  tags?: TaskTag[]
+  onAdd?: (tag: Partial<TaskTag>) => void
+  onRemove?: (id: string) => void
 }
 
 const defaultTags: TaskTag[] = [
@@ -48,9 +48,8 @@ const TagsInput: React.FC<Props> = ({ tags, onAdd, onRemove }) => {
   }
 
   return (
-    <Box borderWidth={1} p={2} borderRadius="lg" onClick={handleClick}>
+    <Box borderRadius="lg" onClick={handleClick}>
       <HStack spacing={2} overflow="auto">
-        <Text>Tags: </Text>
         {list.map((li) => (
           <Tag
             key={li.id}
@@ -70,4 +69,4 @@ const TagsInput: React.FC<Props> = ({ tags, onAdd, onRemove }) => {
   )
 }
 
-export default TagsInput
+export default memo(TagsInput)

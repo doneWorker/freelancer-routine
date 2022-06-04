@@ -1,4 +1,10 @@
-import { intervalToDuration } from 'date-fns'
+import {
+  intervalToDuration,
+  formatDistanceToNow,
+  isToday,
+  isTomorrow,
+  isYesterday,
+} from 'date-fns'
 
 // Time constants
 export const MS_IN_SEC: number = 1_000
@@ -12,7 +18,10 @@ export const stdDatePattern: string = 'MM/dd/yyyy hh:mm a'
 
 export const formatDate = () => {}
 
-export const getDuration = (timeInSeconds: number): string => {
+export const getDuration = (
+  timeInSeconds: number,
+  ignoreSeconds: boolean = false,
+): string => {
   const {
     days, hours, minutes, seconds,
   } = intervalToDuration({
@@ -23,7 +32,7 @@ export const getDuration = (timeInSeconds: number): string => {
   const d = days && days > 0 ? `${days} days` : ''
   const h = hours && hours > 0 ? `${hours} hours` : ''
   const m = minutes && minutes > 0 ? `${minutes} min` : ''
-  const s = seconds && seconds > 0 ? `${seconds} sec` : ''
+  const s = !ignoreSeconds && seconds && seconds > 0 ? `${seconds} sec` : ''
 
   return `${d} ${h} ${m} ${s}`
 }
@@ -37,4 +46,20 @@ export const getDurationHMS = (sec: number): string => {
   return `${hh.toString().padStart(2, '0')}:${mm.toString().padStart(2, '0')}:${ss
     .toString()
     .padStart(2, '0')}`
+}
+
+export const fromNow = (date: Date): string => {
+  if (isToday(date)) {
+    return 'Today'
+  }
+
+  if (isYesterday(date)) {
+    return 'Yesterday'
+  }
+
+  if (isTomorrow(date)) {
+    return 'Tomorrow'
+  }
+
+  return formatDistanceToNow(date, { addSuffix: true })
 }

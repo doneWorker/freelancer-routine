@@ -1,9 +1,7 @@
 import axios from 'axios'
 
 import { Project } from 'models/Project'
-import { ListResponse, responseIsSuccess } from './common'
-
-const API_URL = 'http://localhost:5000'
+import { API_URL, ListResponse, responseIsSuccess } from './common'
 
 export const fetchProjects = async (): Promise<ListResponse<Project>> => {
   const url = `${API_URL}/projects`

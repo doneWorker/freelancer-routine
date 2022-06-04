@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
+import { RecoilRoot } from 'recoil'
 import reportWebVitals from './reportWebVitals'
 import * as serviceWorker from './serviceWorker'
 
@@ -41,9 +42,11 @@ const root = createRoot(container)
 root.render(
   // <React.StrictMode>
   <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <RecoilRoot>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </RecoilRoot>
   </Provider>,
   // </React.StrictMode>
 )

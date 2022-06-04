@@ -1,8 +1,10 @@
-import React, { memo } from 'react'
+import React from 'react'
 import { Box, Button } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
+import { useRecoilValue } from 'recoil'
 
 import LanguageSwitcher from 'components/LanguageSwitcher'
+import { userState } from 'store/recoil/user.atom'
 
 import { MdDashboard } from 'react-icons/md'
 
@@ -11,16 +13,18 @@ type Props = {
   center?: React.ReactNode
 }
 
-const Header: React.FC<Props> = memo(({ isAbsolute = false, center = null }) => {
-  const style = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '100%',
-    padding: '0 5px',
-    height: 50,
-    borderBottom: '1px solid #eee',
-  }
+const style = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  width: '100%',
+  height: 50,
+  padding: '0 5px',
+  borderBottom: '1px solid #eee',
+}
+
+const Header: React.FC<Props> = ({ isAbsolute = false, center = null }) => {
+  const user = useRecoilValue(userState)
 
   return (
     <Box as="header" position={isAbsolute ? 'absolute' : undefined} style={style}>
@@ -32,9 +36,10 @@ const Header: React.FC<Props> = memo(({ isAbsolute = false, center = null }) => 
         </Link>
       </nav>
       {center}
+      <span>{user.firstName}</span>
       <LanguageSwitcher />
     </Box>
   )
-})
+}
 
-export default Header
+export default React.memo(Header)

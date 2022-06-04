@@ -1,7 +1,16 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-shadow */
 export type TaskTag = {
   id: string
   name: string
   color: string
+}
+
+export enum TaskPriority {
+  Low = 'LOW',
+  Medium = 'MEDIUM',
+  High = 'HIGH',
+  Critical = 'CRITICAL',
 }
 
 export type TaskPhase = {
@@ -25,6 +34,8 @@ export type Task = {
   isCompleted: Boolean
   dateCreated: string
   dateUpdated: string
+  dueDate?: string
+  priority?: TaskPriority
   dateCompleted?: string
   extLink?: string
   parentId?: string

@@ -3,33 +3,26 @@ import { Tr, Td } from '@chakra-ui/react'
 
 import { Clickable } from 'types/common'
 import { Task } from 'models/Task'
-import { format } from 'date-fns'
-import { getDuration, stdDatePattern } from 'helpers/dateHelper'
+import { fromNow, getDuration } from 'helpers/dateHelper'
 
-type Props = Task & Clickable & { isSelected?: boolean }
+type Props = Partial<Task> & Clickable & { isSelected?: boolean }
 
-const TaskCard: React.FC<Props> = memo(
+const TaskRow: React.FC<Props> = memo(
   ({
     id,
     name,
-    dateCreated,
-    dateUpdated,
-    tags,
+    dueDate,
+    priority,
     timeSpent = 0,
     isSelected,
     onClick = () => {},
   }) => {
-    const created = useMemo(
-      () => dateCreated && format(new Date(dateCreated), stdDatePattern),
-      [dateCreated],
+    const dueDateMemo = useMemo(
+      () => dueDate && fromNow(new Date(dueDate)),
+      [dueDate],
     )
 
-    const updated = useMemo(
-      () => dateUpdated && format(new Date(dateUpdated), stdDatePattern),
-      [dateUpdated],
-    )
-
-    const duration = useMemo(() => getDuration(timeSpent), [timeSpent])
+    const duration = useMemo(() => getDuration(timeSpent, true), [timeSpent])
 
     const hoverStyles = {
       cursor: 'pointer',
@@ -44,14 +37,13 @@ const TaskCard: React.FC<Props> = memo(
 
     return (
       <Tr _hover={hoverStyles} {...extraStyles} onClick={() => onClick(id)}>
-        <Td fontWeight={isSelected ? 'bold' : undefined}>{name}</Td>
+        <Td fontWeight="500">{name}</Td>
+        <Td>{dueDateMemo}</Td>
+        <Td>{priority}</Td>
         <Td>{duration}</Td>
-        <Td>{tags}</Td>
-        <Td>{created}</Td>
-        <Td>{updated}</Td>
       </Tr>
     )
   },
 )
 
-export default TaskCard
+export default TaskRow

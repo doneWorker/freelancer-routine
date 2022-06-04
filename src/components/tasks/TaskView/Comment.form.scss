@@ -1,0 +1,21 @@
+.comment-editor {
+  border-radius: 7.5px;
+  border: 1px solid #ccc;
+  background: white;
+
+  .ql-container,
+  .ql-toolbar {
+    border: none;
+  }
+
+  &__submit,
+  .ql-toolbar {
+    display: none;
+  }
+
+  &.focused {
+    .ql-toolbar {
+      display: block;
+    }
+  }
+}

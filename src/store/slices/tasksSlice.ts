@@ -1,8 +1,7 @@
-import { v4 as uuid } from 'uuid'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import * as api from 'api/tasks'
 import { LoadingStatus } from 'types/common'
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AsyncAction, RootState } from '../index'
 
 import { Task, TaskStatus, TimeSpan } from '../../models/Task'
@@ -101,22 +100,18 @@ export const fetchTasks = (projectId: string): AsyncAction => async (dispatch) =
   }
 }
 
+const defaultTaskName = 'New Task'
 export const createTask = (projectId: string): AsyncAction =>
-  async (dispatch): Promise<string> => {
-    const d = Date()
-    const id = uuid()
-    const task: Task = {
-      id,
-      name: '',
-      description: '',
-      projectId,
-      isCompleted: false,
-      dateCreated: d,
-      dateUpdated: d,
+  async (dispatch): Promise<string | null> => {
+    dispatch(setLoadingStatus(LoadingStatus.Loading))
+    const createdTask = await api.createTask(projectId, defaultTaskName)
+
+    if (createdTask !== null) {
+      dispatch(create(createdTask))
+      return createdTask.id
     }
 
-    dispatch(create(task))
-    return id
+    return null
   }
 
 /*

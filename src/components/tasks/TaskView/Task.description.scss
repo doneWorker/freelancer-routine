@@ -1,0 +1,39 @@
+.task-editor {
+  position: relative;
+  overflow: hidden;
+  border-radius: 5px;
+  border: 2px solid transparent;
+  transition: border 0.3s, padding 0.3s;
+
+  p {
+    white-space: pre;
+  }
+
+  .ql-container {
+    border: none;
+    font-size: 15px;
+  }
+
+  .ql-toolbar {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    border: none;
+    transform: translateY(45px);
+    transition: all 0.2s ease-in-out;
+  }
+
+  &.focused {
+    padding-bottom: 45px;
+    border-color: #eee;
+
+    .ql-toolbar {
+      transform: translateY(0);
+    }
+  }
+
+  /* User input elements */
+  ul {
+    padding-left: 0.75em;
+  }
+}

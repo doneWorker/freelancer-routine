@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react'
+/* eslint-disable operator-linebreak */
+/* eslint-disable object-curly-newline */
+// eslint-disable-next-line object-curly-newline
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { useRecoilValue } from 'recoil'
+import { useSelector, useDispatch } from 'react-redux'
+import { useParams, useNavigate } from 'react-router-dom'
 import {
   Container,
   Table,
@@ -9,40 +15,44 @@ import {
   TableContainer,
   Flex,
 } from '@chakra-ui/react'
-import { useSelector, useDispatch } from 'react-redux'
-import { useParams, useNavigate } from 'react-router-dom'
 
 import { projectByIdSelector } from 'store/slices/projectsSlice'
+import { drop } from 'store/slices/tasksSlice'
 import {
-  createTask,
-  setActiveTask,
-  update,
-  drop,
-  tasksSelector,
-  tasksActiveIdSelector,
-  taskActiveSelector,
-  fetchTasks,
-} from 'store/slices/tasksSlice'
+  taskActiveState,
+  tasksState,
+  useTasksActions,
+} from 'store/recoil/tasks.atom'
 import Header from 'components/Header'
 import TaskRow from 'components/tasks/Task.row'
-import TaskView from 'components/tasks/Task.view'
-
+import TaskView from 'components/tasks/TaskView'
 import TasksActions from 'components/tasks/Tasks.actions'
+import { TaskPriority } from 'models/Task'
 
 /*
  * Project's page
  */
 
+const TASK_COLUMNS: string[] = ['Name', 'Due Date', 'Priority', 'Time Spent']
+
 const Project: React.FC = () => {
-  const tasks = useSelector(tasksSelector)
-  const activeId = useSelector(tasksActiveIdSelector)
-  const activeTask = useSelector(taskActiveSelector)
+  // const tasks = useSelector(tasksSelector)
+  const tasks = useRecoilValue(tasksState)
+  const activeTask = useRecoilValue(taskActiveState).data
+  const activeId = useRecoilValue(taskActiveState).id
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { projectId } = useParams()
   const currentProject = useSelector(projectByIdSelector(projectId))
   const [isTaskView, setIsTaskView] = useState<Boolean>(false)
   const projectName = currentProject?.name
+  const {
+    fetchTasksByProject,
+    createTask,
+    updateTask,
+    activateTask,
+    submitComment,
+  } = useTasksActions()
 
   const handleCloseTask = useCallback(() => {
     setIsTaskView(false)
@@ -57,60 +67,78 @@ const Project: React.FC = () => {
   const handleOpenTask = useCallback(
     (taskId: string) => {
       setIsTaskView(true)
-      dispatch(setActiveTask(taskId))
+      activateTask(taskId)
       navigate(`/project/${projectId}/${taskId}`)
     },
-    [projectId, dispatch, setIsTaskView, navigate],
+    [projectId],
   )
 
   const handleAddTask = useCallback(async () => {
     if (projectId) {
-      const taskId: unknown = await dispatch(createTask(projectId))
-      if (typeof taskId === 'string') dispatch(setActiveTask(taskId))
-
-      navigate(`/project/${projectId}/${taskId}`)
+      createTask(projectId)
     }
-  }, [projectId, dispatch, navigate])
+  }, [projectId])
 
   const handleChangeTask = useCallback(
     (key, val) => {
-      if (activeId !== undefined) dispatch(update({ id: activeId, key, val }))
+      if (activeId !== null) updateTask(activeId, key, val)
     },
     [activeId, dispatch],
   )
 
+  const handleSubmitComment = useCallback(
+    (content) => {
+      if (!activeId) return
+      submitComment(activeId, content)
+    },
+    [activeId],
+  )
+
   // hydrate
   useEffect(() => {
-    if (projectId !== undefined) dispatch(fetchTasks(projectId))
+    if (projectId !== undefined) {
+      fetchTasksByProject(projectId)
+    }
   }, [projectId, dispatch])
 
-  const headerTitle = <b>{projectName}</b>
+  const headerTitle = useMemo(() => <b>{projectName}</b>, [projectName])
+
+  const THead = useMemo(
+    () => (
+      <Tr>
+        {TASK_COLUMNS.map((t) => (
+          <Th key={t} textTransform="initial">
+            {t}
+          </Th>
+        ))}
+      </Tr>
+    ),
+    [],
+  )
 
   return (
     <>
       <Header center={headerTitle} />
-      <Container width="100%" maxWidth="100%">
-        <Flex>
+      <Container width="100%" maxWidth="1920px" h="calc(100vh - 50px)" p={0}>
+        <Flex height="100%">
           <TableContainer width="100%">
             <TasksActions onCreate={handleAddTask} />
             {/* Section: TODO */}
-            <Table>
-              <Thead>
-                <Tr>
-                  <Th>Name</Th>
-                  <Th>Time Spent</Th>
-                  <Th>Tags</Th>
-                  <Th>Date Created</Th>
-                  <Th>Date Updated</Th>
-                </Tr>
-              </Thead>
+            <Table size="sm">
+              <Thead>{THead}</Thead>
               <Tbody>
                 {tasks.list.map((task) => (
                   <TaskRow
                     key={task.id}
+                    id={task.id}
                     isSelected={isTaskView && task.id === activeId}
+                    name={
+                      activeId === task.id ? (activeTask.name as string) : task.name
+                    }
+                    priority={TaskPriority.Medium}
+                    timeSpent={10_355}
+                    dueDate={task.dateUpdated}
                     onClick={handleOpenTask}
-                    {...task}
                   />
                 ))}
               </Tbody>
@@ -118,9 +146,14 @@ const Project: React.FC = () => {
           </TableContainer>
           {isTaskView && (
             <TaskView
+              description={activeTask.description}
+              name={activeTask.name}
+              extLink={activeTask.extLink}
+              dueDate="2022-03-10"
               onTaskChange={handleChangeTask}
               onClose={handleCloseTask}
               onDelete={handleDeleteTask}
+              onCommentSubmit={handleSubmitComment}
               {...activeTask}
             />
           )}

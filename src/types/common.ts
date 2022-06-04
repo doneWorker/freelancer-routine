@@ -8,3 +8,11 @@ export enum LoadingStatus {
 }
 
 export type Clickable = { onClick?: (...args: any) => void }
+
+export interface signUpArgs {
+  firstName: string
+  lastName: string
+  password: string
+  email: string
+  confirmPassword: string
+}

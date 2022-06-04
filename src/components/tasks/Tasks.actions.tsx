@@ -4,12 +4,11 @@ import { Button, HStack } from '@chakra-ui/react'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
 
 interface Props {
-  // selectedIds?: string[]
   onCreate: () => void
 }
 
 const TasksActions: React.FC<Props> = ({ onCreate }) => (
-  <HStack borderBottom="1px solid #eee">
+  <HStack borderBottom="1px solid #eee" h="50px">
     <Button
       margin={1}
       size="sm"
@@ -21,4 +20,4 @@ const TasksActions: React.FC<Props> = ({ onCreate }) => (
   </HStack>
 )
 
-export default TasksActions
+export default React.memo(TasksActions)

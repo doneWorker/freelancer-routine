@@ -1,0 +1,17 @@
+.due-date__picker {
+  .rdp-cell {
+    width: 30px;
+    height: 30px;
+  }
+
+  .rdp-day {
+    width: 25px;
+    height: 25px;
+    margin: 5px;
+    border-radius: 5px;
+
+    &_selected:not([aria-disabled='true']) {
+      background: #3a9b99;
+    }
+  }
+}
