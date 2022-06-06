@@ -1,6 +1,8 @@
 import { lazy, Suspense, useLayoutEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { ChakraProvider, extendTheme } from '@chakra-ui/react'
+import {
+  ChakraProvider, extendTheme, Spinner, Box,
+} from '@chakra-ui/react'
 
 import { ProtectedRoute } from 'navigation'
 import { useUserAction } from 'store/recoil/user.atom'
@@ -20,6 +22,18 @@ const theme = extendTheme({
   useSystemColorMode: false,
 })
 
+const LoadingSpinner = () => (
+  <Box
+    w="100vw"
+    h="100vh"
+    display="flex"
+    justifyContent="center"
+    alignItems="center"
+  >
+    <Spinner label="loading" size="xl" />
+  </Box>
+)
+
 const App = () => {
   const { fetchUser } = useUserAction()
 
@@ -34,7 +48,7 @@ const App = () => {
           path="/"
           element={(
             <ProtectedRoute>
-              <Suspense fallback={<>Loading...</>}>
+              <Suspense fallback={<LoadingSpinner />}>
                 <Dashboard />
               </Suspense>
             </ProtectedRoute>
@@ -43,7 +57,7 @@ const App = () => {
         <Route
           path="/signin"
           element={(
-            <Suspense fallback={<>Loading...</>}>
+            <Suspense fallback={<LoadingSpinner />}>
               <SignIn />
             </Suspense>
           )}
@@ -51,7 +65,7 @@ const App = () => {
         <Route
           path="/signup"
           element={(
-            <Suspense fallback={<>Loading...</>}>
+            <Suspense fallback={<LoadingSpinner />}>
               <SignUp />
             </Suspense>
           )}
@@ -60,7 +74,7 @@ const App = () => {
           path="dashboard"
           element={(
             <ProtectedRoute>
-              <Suspense fallback={<>Loading...</>}>
+              <Suspense fallback={<LoadingSpinner />}>
                 <Dashboard />
               </Suspense>
             </ProtectedRoute>
@@ -71,7 +85,7 @@ const App = () => {
             path=""
             element={(
               <ProtectedRoute>
-                <Suspense fallback={<>Loading...</>}>
+                <Suspense fallback={<LoadingSpinner />}>
                   <Project />
                 </Suspense>
               </ProtectedRoute>
@@ -81,7 +95,7 @@ const App = () => {
             path=":taskId"
             element={(
               <ProtectedRoute>
-                <Suspense fallback={<>Loading...</>}>
+                <Suspense fallback={<LoadingSpinner />}>
                   <Project />
                 </Suspense>
               </ProtectedRoute>

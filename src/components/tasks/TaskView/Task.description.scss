@@ -24,6 +24,7 @@
   }
 
   &.focused {
+    overflow: auto;
     padding-bottom: 45px;
     border-color: #eee;
 
@@ -33,6 +34,9 @@
   }
 
   /* User input elements */
+  .mention {
+    text-decoration: underline;
+  }
   ul {
     padding-left: 0.75em;
   }

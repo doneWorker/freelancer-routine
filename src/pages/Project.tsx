@@ -27,7 +27,7 @@ import Header from 'components/Header'
 import TaskRow from 'components/tasks/Task.row'
 import TaskView from 'components/tasks/TaskView'
 import TasksActions from 'components/tasks/Tasks.actions'
-import { TaskPriority } from 'models/Task'
+import useTitle from 'hooks/useTitle'
 
 /*
  * Project's page
@@ -46,6 +46,7 @@ const Project: React.FC = () => {
   const currentProject = useSelector(projectByIdSelector(projectId))
   const [isTaskView, setIsTaskView] = useState<Boolean>(false)
   const projectName = currentProject?.name
+  const setTitle = useTitle()
   const {
     fetchTasksByProject,
     createTask,
@@ -94,6 +95,8 @@ const Project: React.FC = () => {
     [activeId],
   )
 
+  setTitle('Tasker.io | Project')
+
   // hydrate
   useEffect(() => {
     if (projectId !== undefined) {
@@ -135,7 +138,7 @@ const Project: React.FC = () => {
                     name={
                       activeId === task.id ? (activeTask.name as string) : task.name
                     }
-                    priority={TaskPriority.Medium}
+                    priority={task.priority}
                     timeSpent={10_355}
                     dueDate={task.dateUpdated}
                     onClick={handleOpenTask}
