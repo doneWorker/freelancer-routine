@@ -24,6 +24,13 @@ export const createTask = async (
   return responseIsSuccess(resp) ? (resp.data.task as Task) : null
 }
 
+export const deleteTask = async (taskId: string): Promise<boolean> => {
+  const url = `${API_URL}/task/${taskId}`
+  const resp = await axios.delete(url)
+
+  return responseIsSuccess(resp)
+}
+
 export const updateTask = async (
   taskId: string,
   updates: Partial<Task>,
@@ -70,4 +77,11 @@ export const submitComment = async (
   const resp = await axios.post(url, { text })
 
   return responseIsSuccess(resp) ? resp.data : null
+}
+
+export const deleteComment = async (id: string): Promise<boolean> => {
+  const url = `${API_URL}/comment/${id}`
+  const resp = await axios.delete(url)
+
+  return responseIsSuccess(resp)
 }

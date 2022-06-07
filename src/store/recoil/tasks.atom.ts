@@ -22,13 +22,15 @@ type ITaskActiveState = {
   data: Partial<Task>
   comments?: Comment[]
 }
+
+const taskActiveDefaultState = {
+  id: null,
+  data: {},
+  comments: [],
+}
 export const taskActiveState = atom<ITaskActiveState>({
   key: 'ActiveTask',
-  default: {
-    id: null,
-    data: {},
-    comments: [],
-  },
+  default: taskActiveDefaultState,
 })
 
 export const useTasksActions = () => {
@@ -68,12 +70,26 @@ export const useTasksActions = () => {
   const debouncedSaveUpdates = debounce(saveUpdates, DEFAULT_UPDATE_DELAY)
 
   const updateTask = (id: string, key: string, val: any) => {
-    setActiveTask((state) => ({
-      ...state,
-      data: { ...state.data, [key]: val },
-    }))
+    activeTask
+      && setActiveTask((state) => ({
+        ...state,
+        data: { ...state.data, [key]: val },
+      }))
 
     debouncedSaveUpdates(id, { [key]: val })
+  }
+
+  const deleteTask = async (id: string) => {
+    const resp = await api.deleteTask(id)
+
+    if (!resp) return
+
+    setTasks((state) => ({
+      ...state,
+      list: state.list.filter((task) => task.id !== id),
+    }))
+
+    activeTask && activeTask.data.id === id && setActiveTask(taskActiveDefaultState)
   }
 
   const activateTask = async (id: string) => {
@@ -96,7 +112,21 @@ export const useTasksActions = () => {
     const resp = await api.submitComment(id, comment)
 
     if (resp !== null && resp.comment !== null) {
-      setActiveTask((task) => ({ ...task, comments: [...(task.comments || []), resp.comment] }))
+      setActiveTask((task) => ({
+        ...task,
+        comments: [...(task.comments || []), resp.comment],
+      }))
+    }
+  }
+
+  const deleteComment = async (id: string) => {
+    const resp = await api.deleteComment(id)
+
+    if (resp) {
+      setActiveTask((task) => ({
+        ...task,
+        comments: task.comments?.filter((c) => c.id !== id),
+      }))
     }
   }
 
@@ -106,6 +136,8 @@ export const useTasksActions = () => {
     activateTask,
     createTask,
     updateTask,
+    deleteTask,
     submitComment,
+    deleteComment,
   }
 }

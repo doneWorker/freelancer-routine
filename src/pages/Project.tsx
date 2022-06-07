@@ -3,7 +3,7 @@
 // eslint-disable-next-line object-curly-newline
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useRecoilValue } from 'recoil'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
 import {
   Container,
@@ -14,10 +14,10 @@ import {
   Th,
   TableContainer,
   Flex,
+  Text,
 } from '@chakra-ui/react'
 
 import { projectByIdSelector } from 'store/slices/projectsSlice'
-import { drop } from 'store/slices/tasksSlice'
 import {
   taskActiveState,
   tasksState,
@@ -36,11 +36,9 @@ import useTitle from 'hooks/useTitle'
 const TASK_COLUMNS: string[] = ['Name', 'Due Date', 'Priority', 'Time Spent']
 
 const Project: React.FC = () => {
-  // const tasks = useSelector(tasksSelector)
   const tasks = useRecoilValue(tasksState)
   const activeTask = useRecoilValue(taskActiveState).data
   const activeId = useRecoilValue(taskActiveState).id
-  const dispatch = useDispatch()
   const navigate = useNavigate()
   const { projectId } = useParams()
   const currentProject = useSelector(projectByIdSelector(projectId))
@@ -50,6 +48,7 @@ const Project: React.FC = () => {
   const {
     fetchTasksByProject,
     createTask,
+    deleteTask,
     updateTask,
     activateTask,
     submitComment,
@@ -61,9 +60,9 @@ const Project: React.FC = () => {
 
   const handleDeleteTask = useCallback(() => {
     if (!activeId) return
-    dispatch(drop(activeId))
+    deleteTask(activeId)
     setIsTaskView(false)
-  }, [activeId, dispatch, setIsTaskView])
+  }, [activeId, setIsTaskView])
 
   const handleOpenTask = useCallback(
     (taskId: string) => {
@@ -84,7 +83,7 @@ const Project: React.FC = () => {
     (key, val) => {
       if (activeId !== null) updateTask(activeId, key, val)
     },
-    [activeId, dispatch],
+    [activeId],
   )
 
   const handleSubmitComment = useCallback(
@@ -102,7 +101,7 @@ const Project: React.FC = () => {
     if (projectId !== undefined) {
       fetchTasksByProject(projectId)
     }
-  }, [projectId, dispatch])
+  }, [projectId])
 
   const headerTitle = useMemo(() => <b>{projectName}</b>, [projectName])
 
@@ -119,47 +118,54 @@ const Project: React.FC = () => {
     [],
   )
 
+  const renderList = () => (
+    <TableContainer width="100%">
+      <TasksActions onCreate={handleAddTask} />
+      {tasks.list.length ? (
+        <Table size="sm">
+          <Thead>{THead}</Thead>
+          <Tbody>
+            {tasks.list.map((task) => (
+              <TaskRow
+                key={task.id}
+                id={task.id}
+                isSelected={isTaskView && task.id === activeId}
+                name={activeId === task.id ? (activeTask.name as string) : task.name}
+                priority={task.priority}
+                timeSpent={10_355}
+                dueDate={task.dateUpdated}
+                onClick={handleOpenTask}
+              />
+            ))}
+          </Tbody>
+        </Table>
+      ) : (
+        <Text fontSize="5xl">No tasks found</Text>
+      )}
+    </TableContainer>
+  )
+
+  const renderTaskView = () => (
+    <TaskView
+      description={activeTask.description}
+      name={activeTask.name}
+      extLink={activeTask.extLink}
+      dueDate={activeTask.dueDate}
+      onTaskChange={handleChangeTask}
+      onClose={handleCloseTask}
+      onDelete={handleDeleteTask}
+      onCommentSubmit={handleSubmitComment}
+      {...activeTask}
+    />
+  )
+
   return (
     <>
       <Header center={headerTitle} />
       <Container width="100%" maxWidth="1920px" h="calc(100vh - 50px)" p={0}>
         <Flex height="100%">
-          <TableContainer width="100%">
-            <TasksActions onCreate={handleAddTask} />
-            {/* Section: TODO */}
-            <Table size="sm">
-              <Thead>{THead}</Thead>
-              <Tbody>
-                {tasks.list.map((task) => (
-                  <TaskRow
-                    key={task.id}
-                    id={task.id}
-                    isSelected={isTaskView && task.id === activeId}
-                    name={
-                      activeId === task.id ? (activeTask.name as string) : task.name
-                    }
-                    priority={task.priority}
-                    timeSpent={10_355}
-                    dueDate={task.dateUpdated}
-                    onClick={handleOpenTask}
-                  />
-                ))}
-              </Tbody>
-            </Table>
-          </TableContainer>
-          {isTaskView && (
-            <TaskView
-              description={activeTask.description}
-              name={activeTask.name}
-              extLink={activeTask.extLink}
-              dueDate="2022-03-10"
-              onTaskChange={handleChangeTask}
-              onClose={handleCloseTask}
-              onDelete={handleDeleteTask}
-              onCommentSubmit={handleSubmitComment}
-              {...activeTask}
-            />
-          )}
+          {renderList()}
+          {isTaskView && renderTaskView()}
         </Flex>
       </Container>
     </>

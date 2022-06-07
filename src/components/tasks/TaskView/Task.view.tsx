@@ -29,10 +29,8 @@ type Props = Partial<Task> & {
 const TaskView: React.FC<Props> = (props: Props) => {
   const { name, description, priority, dueDate, id } = props
   const { onTaskChange, onCommentSubmit, onDelete, onClose } = props
-  const { fetchComments } = useTasksActions()
-  const { comments } = useRecoilValue(taskActiveState)
-
-  console.log('comments', comments)
+  const { fetchComments, deleteComment } = useTasksActions()
+  const task = useRecoilValue(taskActiveState)
 
   const ref = useRef<HTMLDivElement>(null)
   const [time, setTime] = useState<number>(0)
@@ -130,11 +128,13 @@ const TaskView: React.FC<Props> = (props: Props) => {
             }
           />
         </Stack>
-        <Box background="#edf2f6" p="10px 12px" mt={2}>
-          Created by @Kirill
+        <Box background="#edf2f6">
+          <Box p="10px 12px" mt={2}>
+            Created by @Kirill
+          </Box>
+          {task?.comments && <CommentsList list={task.comments} onDelete={(id) => deleteComment(id)} />}
+          <CommentForm onSubmit={onCommentSubmit} />
         </Box>
-        <CommentsList list={comments || []} />
-        <CommentForm onSubmit={onCommentSubmit} />
       </Box>
     </Box>
   )
