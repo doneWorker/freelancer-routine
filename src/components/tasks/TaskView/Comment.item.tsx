@@ -4,13 +4,16 @@ import { Box, Stack, HStack, Avatar, Text, Tooltip, Icon } from '@chakra-ui/reac
 
 import { Comment } from 'models/Comment'
 import { formatDistance } from 'date-fns'
-import { BiTrash } from 'react-icons/bi'
 
-type Props = Partial<Comment> & { onDelete: () => void }
+import { BiTrash, BiPencil } from 'react-icons/bi'
+
+type Props = Partial<Comment> & { onDelete: () => void; onEdit: () => void }
 
 const CommentItem: React.FC<Props> = (props) => {
-  const { author, body, dateCreated } = props
-  const { onDelete } = props
+  const { author, body, dateCreated, isEdited } = props
+  const { onDelete, onEdit } = props
+
+  console.log('comment is edited', isEdited)
 
   const dateCreatedMemo = useMemo(
     () =>
@@ -32,22 +35,35 @@ const CommentItem: React.FC<Props> = (props) => {
             <Text color="gray.500" ml={2}>
               {dateCreatedMemo}
             </Text>
+            {isEdited && (
+              <Text color="gray.500" ml={2}>
+                | edited
+              </Text>
+            )}
           </Box>
           <Box w="100%" dangerouslySetInnerHTML={{ __html: body || '' }} />
-          <Tooltip label="delete comment" fontSize="md">
-            <Box
-              position="absolute"
-              right={0}
-              bottom={0}
-              cursor="pointer"
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between"
-              onClick={() => onDelete()}
-            >
-              <Icon as={BiTrash} />
-            </Box>
-          </Tooltip>
+          <Box position="absolute" right={0} bottom={0}>
+            <Tooltip label="delete comment" fontSize="md">
+              <Box
+                cursor="pointer"
+                display="flex"
+                alignItems="center"
+                justifyContent="space-between"
+                onClick={() => onDelete()}
+              >
+                <Icon as={BiTrash} />
+              </Box>
+              <Box
+                cursor="pointer"
+                display="flex"
+                alignItems="center"
+                justifyContent="space-between"
+                onClick={() => onEdit()}
+              >
+                <Icon as={BiPencil} />
+              </Box>
+            </Tooltip>
+          </Box>
         </Box>
       </HStack>
     </Stack>

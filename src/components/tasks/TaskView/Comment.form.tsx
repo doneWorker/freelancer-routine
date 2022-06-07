@@ -7,16 +7,20 @@ import classNames from 'classnames'
 import './Comment.form.scss'
 
 interface Props {
-  // eslint-disable-next-line no-unused-vars
+  isEditMode?: boolean
+  commentBody?: string
   onSubmit(content: string): void
 }
 
 const PLACEHOLDER = 'Leave a comment'
 const toolbar = ['bold', 'italic', 'underline', 'image']
 
-const CommentForm: React.FC<Props> = ({ onSubmit }) => {
+const CommentForm: React.FC<Props> = (props) => {
+  const { isEditMode, commentBody } = props
+  const { onSubmit } = props
+
   const [focused, setFocused] = useState<boolean>(false)
-  const [content, setContent] = useState<string>('')
+  const [content, setContent] = useState<string>(commentBody || '')
 
   const handleSubmit = () => {
     onSubmit(content)

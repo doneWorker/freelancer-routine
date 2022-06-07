@@ -58,6 +58,10 @@ const TaskView: React.FC<Props> = (props: Props) => {
     removeTickerListener(tickerCallback)
   }, [removeTickerListener, tickerCallback, setIsTicking])
 
+  const handleEditComment = (id: string) => {
+    console.log(`edit comment with ${id}`)
+  }
+
   const formattedTimeSpent = useMemo(() => getDurationHMS(time), [time])
 
   useEffect(() => {
@@ -132,7 +136,13 @@ const TaskView: React.FC<Props> = (props: Props) => {
           <Box p="10px 12px" mt={2}>
             Created by @Kirill
           </Box>
-          {task?.comments && <CommentsList list={task.comments} onDelete={(id) => deleteComment(id)} />}
+          {task?.comments && (
+            <CommentsList
+              list={task.comments}
+              onDelete={(id) => deleteComment(id)}
+              onEdit={handleEditComment}
+            />
+          )}
           <CommentForm onSubmit={onCommentSubmit} />
         </Box>
       </Box>
